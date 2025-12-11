@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import ScanPage from './pages/ScanPage';
 import { AuthProvider, useAuth } from './services/authService';
+import './index.css';
 
 function PrivateRoute({ children }) {
     const { user, loading } = useAuth();
@@ -20,7 +21,7 @@ return (
 path="/"
     element={
     <PrivateRoute>
-    <DashboardPage />npm 
+    <DashboardPage />
     </PrivateRoute>
     }
 />
