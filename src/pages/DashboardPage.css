@@ -1,0 +1,43 @@
+/* Container for centering the login box */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* full screen height */
+  background-color: #f3f4f6; /* light gray background */
+}
+
+/* The white login box */
+.login-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Login title */
+.login-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Google button (optional if not using separate CSS) */
+.google-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.google-btn:hover {
+  background-color: #2f6bdc;
+}

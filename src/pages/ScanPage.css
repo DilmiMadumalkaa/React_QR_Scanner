@@ -1,0 +1,30 @@
+.scan-container {
+padding: 20px;
+}
+.scan-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 15px;
+}
+.video-wrapper {
+max-width: 600px;
+background-color: black;
+border-radius: 8px;
+overflow: hidden;
+}
+.scanned-box {
+margin-top: 15px;
+padding: 12px;
+background-color: #f3f4f6;
+border-radius: 6px;
+border: 1px solid #ddd;
+}
+.scanned-text {
+word-wrap: break-word;
+font-size: 16px;
+}
+.error-text {
+color: #dc2626;
+margin-top: 10px;
+}
