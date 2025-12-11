@@ -1,38 +1,47 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './DashboardPage.css';
-import { useAuth } from '../services/authService';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./DashboardPage.css";
+import { useAuth } from "../services/authService";
+
 export default function DashboardPage() {
-const navigate = useNavigate();
-const { user, logout } = useAuth();
-return (
-<div className="p-6">
-<div className="flex justify-between items-center mb-6">
-<div>
-<h2 className="text-xl">Welcome</h2>
-<p>{user?.displayName}</p>
-<p className="text-sm text-gray-500">{user?.email}</p>
-</div>
-<div className="flex gap-2">
-<button
-onClick={() => navigate('/scan')}
-className="px-3 py-2 bg-green-600 text-white rounded"
->
-Scan QR
-</button>
-<button
-onClick={logout}
-className="px-3 py-2 bg-red-600 text-white rounded"
->
-Sign out
-</button>
-</div>
-</div>
-<div>
-<h3 className="text-lg">Scan History (example)</h3>
-<p className="text-sm text-gray-500">Scans will be saved to your
-backend.</p>
-</div>
-</div>
-);
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  return (
+    <div className="dashboard-container">
+      <header className="dashboard-header">
+        <h1 className="dashboard-title">Dashboard</h1>
+        <p className="dashboard-subtitle">Your QR Scan Management Panel</p>
+      </header>
+
+      <div className="dashboard-card fade-in">
+        <div className="user-info">
+          <h2>Welcome ✨</h2>
+          <p className="user-name">{user?.displayName}</p>
+          <p className="user-email">{user?.email}</p>
+        </div>
+
+        <div className="dashboard-actions">
+          <button onClick={() => navigate("/scan")} className="btn scan-btn">
+            📷 Scan QR
+          </button>
+
+          <button onClick={logout} className="btn logout-btn">
+            🚪 Sign Out
+          </button>
+        </div>
+      </div>
+
+      <div className="history-section fade-in-delayed">
+        <h3 className="section-title">📄 Scan History</h3>
+        <p className="section-subtitle">
+          Your scanned QR entries will appear here once saved in the backend.
+        </p>
+
+        <div className="history-placeholder">
+          <p>No scans yet…</p>
+        </div>
+      </div>
+    </div>
+  );
 }
