@@ -13,28 +13,27 @@ function PrivateRoute({ children }) {
 }
 
 export default function App() {
-return (
-<AuthProvider>
-<Routes>
-<Route path="/login" element={<LoginPage />} />
-<Route
-path="/"
-    element={
-    <PrivateRoute>
-    <DashboardPage />
-    </PrivateRoute>
-    }
-/>
-<Route
-path="/scan"
-element={
-<PrivateRoute>
-<ScanPage />
-</PrivateRoute>
-}
-/>
-</Routes>
-</AuthProvider>
-
-);
+    return (
+        <AuthProvider>
+            <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route
+                    path="/"
+                    element={
+                    <PrivateRoute>
+                    <DashboardPage />npm
+                    </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/scan"
+                    element={
+                    <PrivateRoute>
+                    <ScanPage />
+                    </PrivateRoute>
+                    }
+                />
+            </Routes>
+        </AuthProvider>
+    );
 }
