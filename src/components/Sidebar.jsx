@@ -1,7 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Sidebar({ user, logout, isOpen, setIsOpen }) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <>
@@ -16,7 +17,7 @@ export default function Sidebar({ user, logout, isOpen, setIsOpen }) {
       </button>
 
       {/* Sidebar */}
-      <aside className={`fixed top-[4.6rem] left-0 h-[calc(100vh-4.6rem)] w-64 bg-[#050E3C] border-r-2 border-white shadow-2xl z-30 transform transition-transform duration-300 text-white ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+      <aside className={`fixed top-[4.6rem] left-0 h-[calc(100vh-4.6rem)] w-64 bg-[#050E3C] border-r-[0.1px] border-white/20 shadow-2xl z-30 transform transition-transform duration-300 text-white ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
         <div className="flex flex-col h-full p-6">
           {/* Navigation Links */}
           <nav className="flex-1 space-y-2">
@@ -25,7 +26,11 @@ export default function Sidebar({ user, logout, isOpen, setIsOpen }) {
                 navigate("/");
                 setIsOpen(false);
               }}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition-all text-left text-white"
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left text-white ${
+                location.pathname === "/" 
+                  ? "bg-white/20 shadow-lg" 
+                  : "hover:bg-white/10"
+              }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
@@ -38,7 +43,11 @@ export default function Sidebar({ user, logout, isOpen, setIsOpen }) {
                 navigate("/scan");
                 setIsOpen(false);
               }}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-all text-left text-white"
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left text-white ${
+                location.pathname === "/scan" 
+                  ? "bg-white/20 shadow-lg" 
+                  : "hover:bg-white/10"
+              }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 -960 960 960" fill="white">
                 <path d="M520-120v-80h80v80h-80Zm-80-80v-200h80v200h-80Zm320-120v-160h80v160h-80Zm-80-160v-80h80v80h-80Zm-480 80v-80h80v80h-80Zm-80-80v-80h80v80h-80Zm360-280v-80h80v80h-80ZM180-660h120v-120H180v120Zm-60 60v-240h240v240H120Zm60 420h120v-120H180v120Zm-60 60v-240h240v240H120Zm540-540h120v-120H660v120Zm-60 60v-240h240v240H600Z"/>
@@ -51,7 +60,11 @@ export default function Sidebar({ user, logout, isOpen, setIsOpen }) {
                 navigate("/history");
                 setIsOpen(false);
               }}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-all text-left text-white"
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left text-white ${
+                location.pathname === "/history" 
+                  ? "bg-white/20 shadow-lg" 
+                  : "hover:bg-white/10"
+              }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
                 <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />

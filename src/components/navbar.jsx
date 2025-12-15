@@ -2,7 +2,7 @@ import React from "react";
 
 const Navbar = ({ logout, user }) => {
   return (
-    <nav className="fixed top-0 left-0 w-full bg-[#050E3C] px-6 py-4 flex items-center justify-between shadow z-50 border-b-[0.1px] border-white-500">
+    <nav className="fixed top-0 left-0 w-full bg-[#050E3C] px-6 py-4 flex items-center justify-between shadow z-50 border-b-[0.1px] border-white/5">
       
       {/* Logo Section */}
       <div className="flex items-center gap-3">
