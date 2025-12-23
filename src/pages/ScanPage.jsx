@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Html5Qrcode } from "html5-qrcode";
 import { sendScanResult } from "../services/apiService";
 import { useAuth } from "../services/authService";
-import Navbar from "../components/navbar";
+import Navbar from "../components/common/navbar";
 import Sidebar from "../components/Sidebar";
 
 export default function ScanPage() {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../services/authService';
-import Navbar from '../components/navbar';
+import Navbar from "../components/common/navbar";
 import Sidebar from '../components/Sidebar';
 
 const History = () => {
