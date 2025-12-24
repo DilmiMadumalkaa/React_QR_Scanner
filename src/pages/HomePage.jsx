@@ -3,11 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../services/authService";
 import Navbar from "../components/common/navbar";
 import Sidebar from "../components/Sidebar";
+import FaultCard from "../components/FaultCard";
+import MyComplaintsCard from "../components/MyComplaintsCard";
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const total = 7;
+  const subtitle = "All reported issues";
 
   return (
     <div className="min-h-screen bg-white overflow-hidden relative text-gray-800">
@@ -17,21 +22,18 @@ export default function HomePage() {
       <Navbar logout={logout} user={user} />
 
       {/* Sidebar */}
-      <Sidebar
+      {/* <Sidebar
         user={user}
         logout={logout}
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
-      />
+      /> */}
 
       {/* Main Content */}
-      <main className="lg:ml-64 p-10 pt-24 relative z-10">
+      <main className="pt-24 justify-center relative z-10">
         <header className="text-center mb-[35px]">
-          <p className="opacity-85 text-[15px]">
-            Welcome to
-          </p>
+          <p className="opacity-85 text-[15px]">Welcome to</p>
           <h1 className="text-4xl font-bold">Location Fault Logger</h1>
-          
         </header>
 
         <div className="flex justify-center">
@@ -51,6 +53,39 @@ export default function HomePage() {
             </svg>
             Scan the QR Code
           </button>
+        </div>
+
+        <div className="grid lg:grid-cols-2 sm:grid-cols-1 justify-items-center">
+          <div className="flex flex-row gap-8 p-10 h-[280px]">
+            <FaultCard
+              title="Total Faults"
+              icon="!"
+              value={7}
+              subtitle="All reported issues"
+              iconBg="bg-red-50"
+              iconColor="text-red-600"
+            />
+            <FaultCard
+              title="In Progress"
+              icon="⏱"
+              value={2}
+              subtitle="Currently being resolved"
+              iconBg="bg-blue-50"
+              iconColor="text-blue-950"
+            />
+            <FaultCard
+              title="Completed Faults"
+              icon="✓"
+              value={2}
+              subtitle="Successfully resolved"
+              iconBg="bg-green-50"
+              iconColor="text-green-600"
+            />
+          </div>
+          <div className="p-10">
+            <MyComplaintsCard/>
+          </div>
+          
         </div>
 
         <style jsx>{`
