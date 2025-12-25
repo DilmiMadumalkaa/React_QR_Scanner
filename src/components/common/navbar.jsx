@@ -1,28 +1,171 @@
-import React from "react";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = ({ logout, user }) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <nav className="fixed top-0 left-0 w-full bg-[#050E3C] px-6 py-4 flex items-center justify-between shadow z-50 border-b-[0.1px] border-white/5">
-      
-      {/* Logo Section */}
-      <div className="flex items-center gap-3">
-        <img
-          src="../slt_logo.png"
-          alt="Logo"
-          className="h-10 w-30"
-        />
+    // <nav className="fixed top-0 left-0 w-full bg-[#050E3C] px-6 py-4 flex items-center justify-between shadow z-50 border-b-[0.1px] border-white/5">
+    //   {/* Logo Section */}
+    //   <div className="flex items-center gap-3">
+    //     <img src="../slt_logo.png" alt="Logo" className="h-10 w-30" />
+    //   </div>
+
+    //   {/* Navigation Links */}
+    //   <div className="">
+    //     <ul className="flex gap-8 text-slate-300 text-left">
+    //       <NavLink
+    //         to="/"
+    //         className={({ isActive }) =>
+    //           `transition ${
+    //             isActive ? "text-white" : "text-white/70 hover:text-white"
+    //           }`
+    //         }
+    //       >
+    //         Dashboard
+    //       </NavLink>
+    //       <NavLink
+    //         to="/mycomplaints"
+    //         className={({ isActive }) =>
+    //           `transition ${
+    //             isActive ? "text-white" : "text-white/70 hover:text-white"
+    //           }`
+    //         }
+    //       >
+    //         My Complaints
+    //       </NavLink>
+    //     </ul>
+    //   </div>
+
+    //   {/* User Details */}
+    //   <div className="flex items-center gap-3">
+    //     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center text-lg font-bold text-white">
+    //       {user?.displayName?.charAt(0) || "U"}
+    //     </div>
+    //     <div className="text-white">
+    //       <p className="font-semibold text-sm">{user?.displayName}</p>
+    //       <p className="text-xs opacity-70">{user?.email}</p>
+    //     </div>
+    //   </div>
+
+    //   <button
+    //         className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-white/80 hover:bg-white/10"
+    //         onClick={() => setOpen((v) => !v)}
+    //         aria-label="Toggle menu"
+    //       >
+    //         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+    //           <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    //         </svg>
+    //       </button>
+    // </nav>
+
+    <nav className="fixed top-0 left-0 w-full bg-[#050E3C] shadow z-50 border-b-[0.1px] border-white/5">
+      <div className="px-6 py-4 flex items-center justify-between">
+        
+        {/* Logo Section */}
+        <div className="flex items-center gap-3">
+          <img src="../slt_logo.png" alt="Logo" className="h-10 w-30" />
+        </div>
+
+        {/* Navigation Links (Desktop) */}
+        <div className="hidden md:block">
+          <ul className="flex gap-8 text-slate-300 text-left">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `transition ${
+                  isActive ? "text-white" : "text-white/70 hover:text-white"
+                }`
+              }
+            >
+              Dashboard
+            </NavLink>
+
+            <NavLink
+              to="/mycomplaints"
+              className={({ isActive }) =>
+                `transition ${
+                  isActive ? "text-white" : "text-white/70 hover:text-white"
+                }`
+              }
+            >
+              My Complaints
+            </NavLink>
+          </ul>
+        </div>
+
+        {/* Right Side: User Details (Desktop) + Hamburger (Mobile) */}
+        <div className="flex items-center gap-3">
+          {/* User Details (hide on very small screens) */}
+          <div className="hidden sm:flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center text-lg font-bold text-white">
+              {user?.displayName?.charAt(0) || "U"}
+            </div>
+            <div className="text-white">
+              <p className="font-semibold text-sm">{user?.displayName}</p>
+              <p className="text-xs opacity-70">{user?.email}</p>
+            </div>
+          </div>
+
+          {/* Hamburger (Mobile only) */}
+          <button
+            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-white/80 hover:bg-white/10"
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M4 6h16M4 12h16M4 18h16"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
-      {/* User Details */}
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center text-lg font-bold text-white">
-          {user?.displayName?.charAt(0) || 'U'}
+      {/* Mobile Dropdown */}
+      {open && (
+        <div className="md:hidden px-6 pb-4">
+          <ul className="flex flex-col gap-2 text-slate-300 text-left">
+            <NavLink
+              to="/"
+              onClick={() => setOpen(false)}
+              className={({ isActive }) =>
+                `rounded-lg px-3 py-2 transition ${
+                  isActive ? "text-white" : "text-white/70 hover:text-white"
+                } hover:bg-white/10`
+              }
+            >
+              Dashboard
+            </NavLink>
+
+            <NavLink
+              to="/mycomplaints"
+              onClick={() => setOpen(false)}
+              className={({ isActive }) =>
+                `rounded-lg px-3 py-2 transition ${
+                  isActive ? "text-white" : "text-white/70 hover:text-white"
+                } hover:bg-white/10`
+              }
+            >
+              My Complaints
+            </NavLink>
+
+            {/* User Details (Mobile) */}
+            <div className="mt-2 flex items-center gap-3 rounded-lg px-3 py-2">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center text-lg font-bold text-white">
+                {user?.displayName?.charAt(0) || "U"}
+              </div>
+              <div className="text-white">
+                <p className="font-semibold text-sm">{user?.displayName}</p>
+                <p className="text-xs opacity-70">{user?.email}</p>
+              </div>
+            </div>
+          </ul>
         </div>
-        <div className="text-white">
-          <p className="font-semibold text-sm">{user?.displayName}</p>
-          <p className="text-xs opacity-70">{user?.email}</p>
-        </div>
-      </div>
+      )}
     </nav>
   );
 };
