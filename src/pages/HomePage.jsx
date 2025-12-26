@@ -30,10 +30,13 @@ export default function HomePage() {
       /> */}
 
       {/* Main Content */}
-      <main className="pt-24 justify-center relative z-10">
-        <header className="text-center mb-[35px]">
+      <main className="pt-24 justify-center relative z-10 mx-5">
+        <header className="text-center mb-[35px] mt-5">
           <p className="opacity-85 text-[15px]">Welcome to</p>
           <h1 className="text-4xl font-bold">Location Fault Logger</h1>
+          <p className="opacity-85 text-[15px] mt-3">
+            Track, report, and monitor location-based issues in real time
+          </p>
         </header>
 
         <div className="flex justify-center">
@@ -41,7 +44,7 @@ export default function HomePage() {
             onClick={() => {
               navigate("/scan");
             }}
-            className="flex items-center  gap-2 bg-[#050E3C] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#050E3C]/90 transition-all shadow-lg"
+            className="flex items-center justify-center w-[500px] gap-2 bg-[#050E3C] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#050E3C]/90 transition-all shadow-lg"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -55,37 +58,43 @@ export default function HomePage() {
           </button>
         </div>
 
-        <div className="grid lg:grid-cols-2 sm:grid-cols-1 justify-items-center">
-          <div className="flex flex-row gap-8 p-10 h-[280px]">
-            <FaultCard
-              title="Total Faults"
-              icon="!"
-              value={7}
-              subtitle="All reported issues"
-              iconBg="bg-red-50"
-              iconColor="text-red-600"
-            />
-            <FaultCard
-              title="In Progress"
-              icon="⏱"
-              value={2}
-              subtitle="Currently being resolved"
-              iconBg="bg-blue-50"
-              iconColor="text-blue-950"
-            />
-            <FaultCard
-              title="Completed Faults"
-              icon="✓"
-              value={2}
-              subtitle="Successfully resolved"
-              iconBg="bg-green-50"
-              iconColor="text-green-600"
-            />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5 justify-items-center items-center">
+          {/* Left: Status cards */}
+          <div className="px-4 sm:px-6 lg:px-10 mt-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 items-center">
+              <FaultCard
+                title="Total Faults"
+                icon="!"
+                value={7}
+                subtitle="All reported issues"
+                iconBg="bg-red-50"
+                iconColor="text-red-600"
+              />
+              <FaultCard
+                title="In Progress"
+                icon="⏱"
+                value={2}
+                subtitle="Currently being resolved"
+                iconBg="bg-blue-50"
+                iconColor="text-blue-950"
+              />
+              <FaultCard
+                title="Completed Faults"
+                icon="✓"
+                value={2}
+                subtitle="Successfully resolved"
+                iconBg="bg-green-50"
+                iconColor="text-green-600"
+              />
+            </div>
           </div>
-          <div className="p-10">
-            <MyComplaintsCard/>
+
+          {/* My Complaints */}
+          <div className="px-4 sm:px-6 lg:px-10 w-full">
+            <div className="w-full max-w-xl lg:max-w-none mx-auto mt-5">
+              <MyComplaintsCard />
+            </div>
           </div>
-          
         </div>
 
         <style jsx>{`

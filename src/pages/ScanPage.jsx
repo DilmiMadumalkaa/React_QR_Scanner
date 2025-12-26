@@ -111,15 +111,15 @@ export default function ScanPage() {
       <Navbar logout={logout} user={user} />
 
       {/* Sidebar */}
-      <Sidebar 
+      {/* <Sidebar 
         user={user} 
         logout={logout} 
         isOpen={isSidebarOpen} 
         setIsOpen={setIsSidebarOpen} 
-      />
+      /> */}
 
       {/* Main Content */}
-      <main className="lg:ml-64 p-10 pt-24 relative z-10">
+      <main className="p-10 pt-24 relative z-10 justify-center">
         <header className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800">Scan QR Code</h1>
           <p className="text-gray-600 mt-2">

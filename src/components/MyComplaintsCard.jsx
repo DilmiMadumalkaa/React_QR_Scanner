@@ -31,7 +31,7 @@ function StatusBadge({ status }) {
 
 function ComplaintItem({ title, location, status }) {
   return (
-    <div className="flex items-start justify-between gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+    <div className="flex items-start justify-between gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm hover:-translate-y-1 transition-all duration-300">
       <div className="min-w-0">
         <h4 className="truncate text-base font-semibold text-gray-900">
           {title}
@@ -69,7 +69,7 @@ export default function MyComplaintsCard({
   ],
 }) {
   return (
-    <div className="w-[520px] rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div className="w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
       <div>
         <h3 className="text-xl font-bold text-gray-900">My Complaints</h3>
         <p className="mt-1 text-sm text-gray-500">
