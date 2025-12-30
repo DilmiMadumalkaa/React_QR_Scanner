@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function FaultCard({title, icon, value, subtitle, iconBg, iconColor}) {
+export default function HomeCard({title, icon, value, subtitle, iconBg, iconColor}) {
   return (
-    <div className="w-[200px] rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:-translate-y-1 transition-all duration-300">
+    <div className="w-full rounded-2xl border border-gray-300 bg-white p-5 shadow-sm hover:-translate-y-1 transition-all duration-300">
       <div className="flex items-start justify-between">
         <h3 className="text-sm font-semibold text-gray-700 leading-snug">
           {title.split(" ").map((word, i) => (
