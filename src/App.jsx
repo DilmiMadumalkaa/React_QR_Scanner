@@ -2,11 +2,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/HomePage";
 import ScanPage from "./pages/ScanPage";
-import History from "./pages/History";
 import { AuthProvider, useAuth } from "./services/authService";
 import "./index.css";
 import LocationPage from "./pages/LocationPage";
 import MyComplaintsPage from "./pages/MyComplaintsPage";
+import LogFaultPage from "./pages/LogFaultPage";
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
@@ -48,6 +48,14 @@ export default function App() {
           element={
             <PrivateRoute>
               <MyComplaintsPage/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/logfault"
+          element={
+            <PrivateRoute>
+              <LogFaultPage/>
             </PrivateRoute>
           }
         />

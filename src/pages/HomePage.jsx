@@ -3,14 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../services/authService";
 import Navbar from "../components/common/navbar";
 import Sidebar from "../components/Sidebar";
-import FaultCard from "../components/FaultCard";
+import HomeCard from "../components/HomeCard";
 import MyComplaintsCard from "../components/MyComplaintsCard";
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  
   const total = 7;
   const subtitle = "All reported issues";
 
@@ -62,7 +61,7 @@ export default function HomePage() {
           {/* Left: Status cards */}
           <div className="px-4 sm:px-6 lg:px-10 mt-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 items-center">
-              <FaultCard
+              <HomeCard
                 title="Total Faults"
                 icon="!"
                 value={7}
@@ -70,7 +69,7 @@ export default function HomePage() {
                 iconBg="bg-red-50"
                 iconColor="text-red-600"
               />
-              <FaultCard
+              <HomeCard
                 title="In Progress"
                 icon="⏱"
                 value={2}
@@ -78,7 +77,7 @@ export default function HomePage() {
                 iconBg="bg-blue-50"
                 iconColor="text-blue-950"
               />
-              <FaultCard
+              <HomeCard
                 title="Completed Faults"
                 icon="✓"
                 value={2}
