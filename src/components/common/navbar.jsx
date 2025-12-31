@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ logout, user }) => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(); // your existing logout logic
+    navigate("/login");
+  };
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-[#050E3C] shadow z-50 border-b-[0.1px] border-white/5 transition-all duration-600">
@@ -53,6 +60,13 @@ const Navbar = ({ logout, user }) => {
               <p className="text-xs opacity-70">{user?.email}</p>
             </div>
           </div>
+
+          <button
+            onClick={handleLogout}
+            className="hidden md:inline-flex items-center border border-white px-4 py-2 ml-3 text-sm font-medium text-white rounded-lg hover:bg-white hover:text-blue-950 transform duration-300 "
+          >
+            Logout
+          </button>
 
           {/* Hamburger (Mobile only) */}
           <button
@@ -110,6 +124,15 @@ const Navbar = ({ logout, user }) => {
                 <p className="text-xs opacity-70">{user?.email}</p>
               </div>
             </div>
+            <button
+              onClick={() => {
+                handleLogout();
+                setOpen(false);
+              }}
+              className="mt-3 rounded-lg px-3 py-2 border border-white text-center text-white  hover:bg-white-600 hover:text-blue-950 transition"
+            >
+              Logout
+            </button>
           </ul>
         </div>
       )}
