@@ -63,8 +63,18 @@ const Navbar = ({ logout, user }) => {
 
           <button
             onClick={handleLogout}
-            className="hidden md:inline-flex items-center border border-white px-4 py-2 ml-3 text-sm font-medium text-white rounded-lg hover:bg-white hover:text-blue-950 transform duration-300 "
+            className="hidden md:inline-flex items-center  border border-white px-4 py-2 ml-3 text-sm font-medium text-white rounded-lg hover:bg-white hover:text-blue-950 transform duration-300 "
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20px"
+              viewBox="0 -960 960 960"
+              width="20px"
+              fill="currentColor"
+              className="mr-2 justify-items-center justify-center"
+            >
+              <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+            </svg>
             Logout
           </button>
 
@@ -129,9 +139,19 @@ const Navbar = ({ logout, user }) => {
                 handleLogout();
                 setOpen(false);
               }}
-              className="mt-3 rounded-lg px-3 py-2 border border-white text-center text-white  hover:bg-white-600 hover:text-blue-950 transition"
+              className="flex items-center justify-center gap-2 w-full px-4 py-2 border border-white/80 rounded-lg  text-white hover:bg-white/10 transition"
             >
-              Logout
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="20px"
+                viewBox="0 -960 960 960"
+                width="20px"
+                fill="currentColor"
+                className="relative justify-center"
+              >
+                <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+              </svg>
+              <span>Logout</span>
             </button>
           </ul>
         </div>
