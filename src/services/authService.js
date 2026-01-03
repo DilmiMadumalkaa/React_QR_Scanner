@@ -13,19 +13,8 @@ setLoading(false);
 return () => unsub();
 }, []);
 const loginWithGoogle = async () => {
-  try {
-    await signInWithPopup(auth, provider);
-  } catch (error) {
-    if (error.code === "auth/cancelled-popup-request") {
-      console.log("Popup cancelled by browser");
-    } else if (error.code === "auth/popup-closed-by-user") {
-      console.log("Popup closed by user");
-    } else {
-      console.error(error);
-    }
-  }
+await signInWithPopup(auth, provider);
 };
-
 const logout = async () => {
 await signOut(auth);
 };
