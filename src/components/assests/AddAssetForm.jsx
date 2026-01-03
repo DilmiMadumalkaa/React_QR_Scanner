@@ -113,7 +113,7 @@ export default function AddAssetForm() {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+    <div className="bg-white p-6">
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Asset ID */}
         <div>
