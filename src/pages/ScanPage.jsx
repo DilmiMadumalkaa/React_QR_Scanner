@@ -1,17 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Html5Qrcode } from "html5-qrcode";
-import { sendScanResult } from "../services/apiService";
-import { useAuth } from "../services/authService";
-import Navbar from "../components/common/navbar";
-import Sidebar from "../components/Sidebar";
+import api from "../services/apiService";
 
 export default function ScanPage() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
   const [error, setError] = useState(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const scannerRef = useRef(null);
   const qrCodeScannerRef = useRef(null);
 
@@ -51,32 +48,33 @@ export default function ScanPage() {
             setIsCameraActive(false);
           }
           
-          // Save to localStorage
-          const scanHistory = JSON.parse(localStorage.getItem('scanHistory') || '[]');
-          const newScan = {
-            id: Date.now(),
-            qrCode: decodedText,
-            date: new Date().toLocaleDateString(),
-            time: new Date().toLocaleTimeString(),
-            timestamp: new Date().toISOString()
-          };
-          scanHistory.unshift(newScan);
-          localStorage.setItem('scanHistory', JSON.stringify(scanHistory));
-          
-          // Try to send to server (optional)
+          // Validate QR code with backend
           try {
-            await sendScanResult({ qr: decodedText });
-            console.log("Scan result sent to server");
+            const response = await api.post("/locations/validate-qr", {
+              qrCode: decodedText,
+            });
+
+            // If QR code is registered, navigate to location page
+            if (response.data.isValid && response.data.location) {
+              navigate('/location', {
+                state: {
+                  locationId: response.data.location.id,
+                  locationData: response.data.location,
+                },
+              });
+            } else {
+              // QR code not registered
+              setErrorMessage("QR code is not registered in the system");
+              setShowErrorModal(true);
+            }
           } catch (err) {
-            console.error("Failed to send to server:", err);
-            // Don't show error since local save succeeded
-            console.log("Saved locally");
+            console.error("Failed to validate QR code:", err);
+            setErrorMessage(
+              err.response?.data?.message || 
+              "This QR code is not registered in the system"
+            );
+            setShowErrorModal(true);
           }
-          
-          // Navigate to history page after a short delay
-          setTimeout(() => {
-            navigate("/history");
-          }, 500);
         },
         (errorMessage) => {
           // Errors during scanning - this is normal when no QR code is in view
@@ -104,30 +102,15 @@ export default function ScanPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white overflow-hidden relative text-gray-800">
-      <div className="absolute inset-0 bg-gray-50/50"></div>
-      
-      {/* Navbar */}
-      <Navbar logout={logout} user={user} />
+    <>
+      <header className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Scan QR Code</h1>
+        <p className="text-gray-600 mt-2">
+          Position your QR code within the camera frame
+        </p>
+      </header>
 
-      {/* Sidebar */}
-      {/* <Sidebar 
-        user={user} 
-        logout={logout} 
-        isOpen={isSidebarOpen} 
-        setIsOpen={setIsSidebarOpen} 
-      /> */}
-
-      {/* Main Content */}
-      <main className="p-10 pt-24 relative z-10 justify-center">
-        <header className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Scan QR Code</h1>
-          <p className="text-gray-600 mt-2">
-            Position your QR code within the camera frame
-          </p>
-        </header>
-
-        <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-6">
           {!isCameraActive ? (
             <button 
               onClick={handleStartCamera} 
@@ -179,7 +162,47 @@ export default function ScanPage() {
             </div>
           )}
         </div>
-      </main>
-    </div>
+
+      {/* Error Modal for Invalid QR Code */}
+      {showErrorModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex-shrink-0 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900">QR Code Not Found</h3>
+            </div>
+            <p className="text-gray-600 mb-6 text-base">
+              {errorMessage}
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowErrorModal(false);
+                  setErrorMessage("");
+                  navigate('/');
+                }}
+                className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all font-medium"
+              >
+                Go to Home
+              </button>
+              <button
+                onClick={() => {
+                  setShowErrorModal(false);
+                  setErrorMessage("");
+                  handleStartCamera();
+                }}
+                className="flex-1 px-4 py-3 bg-[#050E3C] text-white rounded-lg hover:bg-[#050E3C]/90 transition-all font-medium"
+              >
+                Scan Again
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
