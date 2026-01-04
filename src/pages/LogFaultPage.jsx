@@ -1,10 +1,12 @@
 import { useState } from "react";
-import Navbar from "../components/common/navbar";
-import { useAuth } from "../services/authService";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function LogFaultPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const asset = location.state?.asset;
   const [images, setImages] = useState([]);
-  const { user, logout } = useAuth();
+
 
   const handleImageUpload = (e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -17,13 +19,27 @@ export default function LogFaultPage() {
     setImages(selectedFiles);
   };
 
-  return (
-    <div className="min-h-screen bg-white overflow-hidden relative text-gray-800">
-      <Navbar logout={logout} user={user} />
-      <div className="max-w-lg mx-auto p-6 pt-24">
-        <h1 className="text-3xl text-center font-bold mb-6">Report Fault</h1>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log("Fault submitted for asset:", asset);
+    alert("Fault reported successfully!");
+    navigate('/location');
+  };
 
-        <form className="space-y-5">
+  return (
+    <>
+      <div className="min-h-screen bg-white overflow-hidden relative text-gray-800">
+        <div className="max-w-lg mx-auto p-6 pt-24">
+          <h1 className="text-3xl text-center font-bold mb-2">Report Fault</h1>
+          {asset && (
+            <p className="text-center text-gray-600 mb-6">
+              Asset: <span className="font-semibold">{asset.name}</span> ({asset.assetId})
+            </p>
+          )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+
           {/* Fault Description */}
           <div>
             <label className="block text-sm font-medium mb-1">
@@ -90,16 +106,26 @@ export default function LogFaultPage() {
             )}
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-[#050E3C] text-white py-3 rounded-lg font-medium
-                     hover:bg-[#050E3C]/90 transition-all active:scale-95"
-          >
-            Submit Fault
-          </button>
+          {/* Submit Buttons */}
+          <div className="flex gap-3 pt-4">
+            <button
+              type="button"
+              onClick={() => navigate('/location')}
+              className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all font-medium"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="flex-1 bg-[#050E3C] text-white py-3 rounded-lg font-medium
+                       hover:bg-[#050E3C]/90 transition-all active:scale-95"
+            >
+              Submit Fault
+            </button>
+          </div>
         </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

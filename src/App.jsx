@@ -2,11 +2,16 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/HomePage";
 import ScanPage from "./pages/ScanPage";
+import History from "./pages/History";
 import { AuthProvider, useAuth } from "./services/authService";
+import Layout from "./components/Layout";
 import "./index.css";
 import LocationPage from "./pages/LocationPage";
 import MyComplaintsPage from "./pages/MyComplaintsPage";
+import FaultDetailsPage from "./pages/FaultDetailsPage";
 import LogFaultPage from "./pages/LogFaultPage";
+import AddAssetPage from "./pages/AddAssetPage";
+
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
@@ -19,43 +24,24 @@ export default function App() {
     <AuthProvider>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        
+        {/* All protected routes wrapped in Layout */}
         <Route
-          path="/"
+          path="/*"
           element={
             <PrivateRoute>
-              <DashboardPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/scan"
-          element={
-            <PrivateRoute>
-              <ScanPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/location"
-          element={
-            <PrivateRoute>
-              <LocationPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/mycomplaints"
-          element={
-            <PrivateRoute>
-              <MyComplaintsPage/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/logfault"
-          element={
-            <PrivateRoute>
-              <LogFaultPage/>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<DashboardPage />} />
+                  <Route path="/scan" element={<ScanPage />} />
+                  <Route path="/history" element={<History />} />
+                  <Route path="/location" element={<LocationPage />} />
+                  <Route path="/add-asset" element={<AddAssetPage />} />
+                  <Route path="/mycomplaints" element={<MyComplaintsPage />} />
+                  <Route path="/logfault" element={<LogFaultPage />} />
+                  <Route path="/faults/:faultId" element={<FaultDetailsPage />} />
+                </Routes>
+              </Layout>
             </PrivateRoute>
           }
         />
