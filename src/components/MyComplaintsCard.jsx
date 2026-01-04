@@ -72,6 +72,7 @@ export default function MyComplaintsCard({
     <div className="w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
       <div>
         <h3 className="text-xl font-bold text-gray-900">My Complaints</h3>
+
         <p className="mt-1 text-sm text-gray-500">
           Track your submitted faults
         </p>
