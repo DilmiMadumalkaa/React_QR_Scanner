@@ -1,20 +1,14 @@
-<<<<<<< HEAD
 import React from "react";
 import AssetList from "../components/assests/AssetList";
 import Navbar from "../components/common/navbar";
 import { useAuth } from "../services/authService";
+import { useNavigate } from "react-router-dom";
 
 export default function LocationPage() {
   const { logout, user } = useAuth();
-=======
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import AssetList from "../components/assests/AssetList";
+  const navigate= useNavigate();
 
-export default function LocationPage() {
-  const navigate = useNavigate();
 
->>>>>>> origin/Timasha
   const assets = [
     {
       id: "1",
@@ -40,11 +34,11 @@ export default function LocationPage() {
   ];
 
   return (
-<<<<<<< HEAD
+
     <div className="min-h-screen bg-white overflow-hidden relative text-gray-800">
       {/* Navbar */}
       <Navbar logout={logout} user={user} />
-      <main className="pt-24 justify-center relative z-10 mx-5">
+      <main className="pt-2 justify-center relative z-10 mx-5">
         <div className="px-4 sm:px-6 py-6">
           <h1 className="text-3xl font-bold text-gray-900 text-center">
             Building A
@@ -53,23 +47,7 @@ export default function LocationPage() {
             Digital Platform Section
           </p>
 
-          <div className="mt-6">
-            <AssetList assets={assets} basePath="/logfault" />
-          </div>
-        </div>
-      </main>
-    </div>
-=======
-    <>
-      <div className="px-4 sm:px-6 py-6">
-        <h1 className="text-3xl font-bold text-gray-900 text-center">
-          Building A
-        </h1>
-        <p className="mt-1 text-md text-gray-500 text-center">
-          Digital Platform Section
-        </p>
-
-        {/* Add New Asset Button */}
+          {/* Add New Asset Button */}
         <div className="flex justify-end mt-4">
           <button
             onClick={() => navigate('/add-asset')}
@@ -82,11 +60,13 @@ export default function LocationPage() {
           </button>
         </div>
 
-        <div className="mt-6">
-          <AssetList assets={assets} />
+          <div className="mt-6">
+            <AssetList assets={assets} basePath="/logfault" />
+          </div>
         </div>
-      </div>
-    </>
->>>>>>> origin/Timasha
+      </main>
+    </div>
+
+    
   );
 }

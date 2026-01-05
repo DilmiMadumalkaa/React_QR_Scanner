@@ -27,7 +27,7 @@ export default function HomePage() {
       /> */}
 
       {/* Main Content */}
-      <main className="pt-24 justify-center relative z-10 mx-5">
+      <main className="pt-2 justify-center relative z-10 mx-5">
         <header className="text-center mb-[35px] mt-5">
           <p className="opacity-85 text-[15px]">Welcome to</p>
           <h1 className="text-4xl font-bold">Location Fault Logger</h1>

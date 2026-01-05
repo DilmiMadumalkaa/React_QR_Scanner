@@ -30,7 +30,7 @@ export default function LogFaultPage() {
   return (
     <>
       <div className="min-h-screen bg-white overflow-hidden relative text-gray-800">
-        <div className="max-w-lg mx-auto p-6 pt-24">
+        <div className="max-w-lg mx-auto p-6 pt-2">
           <h1 className="text-3xl text-center font-bold mb-2">Report Fault</h1>
           {asset && (
             <p className="text-center text-gray-600 mb-6">
@@ -107,11 +107,11 @@ export default function LogFaultPage() {
           </div>
 
           {/* Submit Buttons */}
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-4 sm:gap-1">
             <button
               type="button"
               onClick={() => navigate('/location')}
-              className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all font-medium"
+              className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all font-medium"
             >
               Cancel
             </button>

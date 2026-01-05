@@ -1,23 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function AssetList({
-  assets = [],
-  onAssetClick,
-  basePath ,
-}) {
+export default function AssetList({ assets = [], onAssetClick, basePath }) {
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-=======
   const handleReportFault = (e, asset) => {
     e.stopPropagation(); // Prevent card click
-    navigate('/logfault', {
+    navigate("/logfault", {
       state: { asset },
     });
   };
 
->>>>>>> origin/Timasha
   const handleClick = (asset) => {
     if (onAssetClick) return onAssetClick(asset);
     navigate(`${basePath}/${asset.id}`);
@@ -27,34 +20,18 @@ export default function AssetList({
     <div className="w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {assets.map((asset) => (
-<<<<<<< HEAD
-          <button
-            key={asset.id}
-            type="button"
-            onClick={() => handleClick(asset)}
-            className="w-full text-left rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md hover:-translate-y-0.5 hover:duration-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          >
-            <div className="flex items-start justify-between gap-4">
-=======
           <div
             key={asset.id}
             className="w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md hover:-translate-y-0.5 hover:duration-300"
           >
             <div className="flex items-start justify-between gap-4 mb-4">
->>>>>>> origin/Timasha
               <div className="flex items-start gap-4 min-w-0">
                 <div className="mt-0.5">
                   <TypeIcon type={asset.type} />
                 </div>
 
                 <div className="min-w-0">
-<<<<<<< HEAD
-                  <p className=" font-semibold text-gray-900">
-=======
-                  <p className="font-semibold text-gray-900">
->>>>>>> origin/Timasha
-                    {asset.name}
-                  </p>
+                  <p className="font-semibold text-gray-900">{asset.name}</p>
                   <p className="mt-1 text-sm text-gray-500">
                     Asset ID:{" "}
                     <span className="font-medium text-gray-700">
@@ -66,9 +43,6 @@ export default function AssetList({
 
               <StatusBadge status={asset.status} />
             </div>
-<<<<<<< HEAD
-          </button>
-=======
 
             {/* Report Fault Button */}
             <button
@@ -79,7 +53,6 @@ export default function AssetList({
               Report Fault
             </button>
           </div>
->>>>>>> origin/Timasha
         ))}
       </div>
 
