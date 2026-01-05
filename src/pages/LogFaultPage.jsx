@@ -107,7 +107,7 @@ export default function LogFaultPage() {
           </div>
 
           {/* Submit Buttons */}
-          <div className="flex gap-3 pt-4 sm:gap-1">
+          <div className="flex gap-3 pt-4 sm:gap-3">
             <button
               type="button"
               onClick={() => navigate('/location')}
