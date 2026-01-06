@@ -158,7 +158,7 @@ const MyComplaintsPage = () => {
       <main className="justify-center relative z-10 mx-5">
         <header className="text-center mb-[35px] mt-5">
           {/* <p className="opacity-85 text-[15px]">My Fault Reports</p> */}
-          <h1 className="text-4xl font-bold">My Complaints</h1>
+          <h1 className="text-4xl font-bold">My Complaint </h1>
           <p className="opacity-85 text-[15px] mt-3">
             Track and manage all your reported faults and issues
           </p>
