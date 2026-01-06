@@ -82,42 +82,40 @@ function ComplaintItem({ fault, onClick }) {
   });
 
   return (
-    <div onClick={onClick} className="bg-white rounded-2xl p-6 shadow-lg cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all border border-gray-200">
+    <div onClick={onClick} className="bg-white rounded-lg p-4 shadow-md cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all border border-gray-200">
       {/* Header: Fault ID and Status Badge */}
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h3 className="text-gray-900 font-bold text-2xl">Fault #{fault.id}</h3>
-        </div>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-gray-900 font-bold text-base">Fault {fault.id}</h3>
         <StatusBadge status={fault.status} />
       </div>
 
-      {/* Asset ID */}
+      {/* Asset ID, Type & Location in same row */}
       <div className="mb-4">
-        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Asset ID</p>
-        <p className="text-lg text-gray-900 font-semibold mt-1">{fault.assetId}</p>
-      </div>
-
-      {/* Asset Type */}
-      <div className="mb-4">
-        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Asset Type</p>
-        <p className="text-lg text-gray-900 font-semibold mt-1">{fault.assetType}</p>
-      </div>
-
-      {/* Location */}
-      <div className="mb-4">
-        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Location</p>
-        <p className="text-gray-700 mt-1">{fault.locationName}</p>
+        <div className="flex gap-4 text-sm">
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Asset ID</p>
+            <p className="text-gray-900 font-semibold truncate">{fault.assetId}</p>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Type</p>
+            <p className="text-gray-900 font-semibold truncate">{fault.assetType}</p>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Location</p>
+            <p className="text-gray-700 text-sm truncate">{fault.locationName}</p>
+          </div>
+        </div>
       </div>
 
       {/* Description */}
-      <div className="mb-6">
-        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Description</p>
-        <p className="text-gray-600 mt-1 line-clamp-2">{truncateText(fault.description)}</p>
+      <div className="mb-4">
+        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Description</p>
+        <p className="text-gray-600 text-sm line-clamp-2">{truncateText(fault.description)}</p>
       </div>
 
-      {/* Divider */}
-      <div className="border-t border-gray-200 pt-4">
-        <p className="text-sm text-gray-500">
+      {/* Divider and Date */}
+      <div className="border-t border-gray-200 pt-2.5">
+        <p className="text-xs text-gray-500">
           Reported on <span className="text-blue-600 font-semibold">{reportedDate}</span>
         </p>
       </div>
@@ -185,13 +183,13 @@ const MyComplaintsPage = () => {
             ) : (
               <div className="w-full">
                 <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900">Your Complaints</h3>
+                  <h3 className="text-2xl font-bold text-gray-900">My Complaints</h3>
                   <p className="mt-2 text-gray-600">
                     Showing {faults.length} complaint{faults.length !== 1 ? 's' : ''}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {faults.map((fault) => (
                     <ComplaintItem
                       key={fault.id}

@@ -43,7 +43,7 @@ const FaultCard = ({ fault }) => {
       {/* Header: Fault ID and Status Badge */}
       <div className="flex justify-between items-start mb-4">
         <div>
-          <h3 className="text-base font-bold text-gray-900">Fault #{fault.id}</h3>
+          <h3 className="text-base font-bold text-gray-900">Fault {fault.id}</h3>
         </div>
         <StatusBadge status={fault.status} />
       </div>
