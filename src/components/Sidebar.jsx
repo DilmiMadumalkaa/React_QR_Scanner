@@ -40,23 +40,6 @@ export default function Sidebar({ user, logout, isOpen, setIsOpen }) {
 
             <button
               onClick={() => {
-                navigate("/scan");
-                setIsOpen(false);
-              }}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left text-white ${
-                location.pathname === "/scan" 
-                  ? "bg-white/20 shadow-lg" 
-                  : "hover:bg-white/10"
-              }`}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 -960 960 960" fill="white">
-                <path d="M520-120v-80h80v80h-80Zm-80-80v-200h80v200h-80Zm320-120v-160h80v160h-80Zm-80-160v-80h80v80h-80Zm-480 80v-80h80v80h-80Zm-80-80v-80h80v80h-80Zm360-280v-80h80v80h-80ZM180-660h120v-120H180v120Zm-60 60v-240h240v240H120Zm60 420h120v-120H180v120Zm-60 60v-240h240v240H120Zm540-540h120v-120H660v120Zm-60 60v-240h240v240H600Z"/>
-              </svg>
-              <span>Scan QR Code</span>
-            </button>
-
-            <button
-              onClick={() => {
                 navigate("/history");
                 setIsOpen(false);
               }}
@@ -71,6 +54,42 @@ export default function Sidebar({ user, logout, isOpen, setIsOpen }) {
                 <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
               </svg>
               <span>History</span>
+            </button>
+
+            <button
+              onClick={() => {
+                navigate("/mycomplaints");
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left text-white ${
+                location.pathname === "/mycomplaints" 
+                  ? "bg-white/20 shadow-lg" 
+                  : "hover:bg-white/10"
+              }`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V9zm-4 0a1 1 0 10-2 0v6a1 1 0 102 0V9z" clipRule="evenodd" />
+              </svg>
+              <span>My Complaints</span>
+            </button>
+
+            <button
+              onClick={() => {
+                navigate("/location");
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left text-white ${
+                location.pathname === "/location" 
+                  ? "bg-white/20 shadow-lg" 
+                  : "hover:bg-white/10"
+              }`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
+                <path fillRule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clipRule="evenodd" />
+              </svg>
+              <span>Assets</span>
             </button>
 
             <button

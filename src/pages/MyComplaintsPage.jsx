@@ -82,37 +82,39 @@ function ComplaintItem({ fault, onClick }) {
   });
 
   return (
-    <div onClick={onClick} className="bg-white rounded-lg p-3 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 transition-all border border-gray-200">
+    <div onClick={onClick} className="bg-white rounded-lg p-4 shadow-md cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all border border-gray-200">
       {/* Header: Fault ID and Status Badge */}
-      <div className="flex justify-between items-start gap-2 mb-2">
-        <h3 className="text-gray-900 font-bold text-sm">Fault {fault.id}</h3>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-gray-900 font-bold text-base">Fault {fault.id}</h3>
         <StatusBadge status={fault.status} />
       </div>
 
       {/* Asset ID, Type & Location in same row */}
-      <div className="grid grid-cols-3 gap-2 mb-2 text-xs">
-        <div>
-          <p className="text-gray-500 uppercase tracking-wide font-semibold mb-0.5">Asset ID</p>
-          <p className="text-gray-900 font-semibold">{fault.assetId}</p>
-        </div>
-        <div>
-          <p className="text-gray-500 uppercase tracking-wide font-semibold mb-0.5">Type</p>
-          <p className="text-gray-900 font-semibold">{fault.assetType}</p>
-        </div>
-        <div>
-          <p className="text-gray-500 uppercase tracking-wide font-semibold mb-0.5">Location</p>
-          <p className="text-gray-700">{fault.locationName}</p>
+      <div className="mb-4">
+        <div className="flex gap-4 text-sm">
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Asset ID</p>
+            <p className="text-gray-900 font-semibold truncate">{fault.assetId}</p>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Type</p>
+            <p className="text-gray-900 font-semibold truncate">{fault.assetType}</p>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Location</p>
+            <p className="text-gray-700 text-sm truncate">{fault.locationName}</p>
+          </div>
         </div>
       </div>
 
       {/* Description */}
-      <div className="mb-2">
-        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-0.5">Description</p>
-        <p className="text-gray-600 text-xs line-clamp-2">{truncateText(fault.description)}</p>
+      <div className="mb-4">
+        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Description</p>
+        <p className="text-gray-600 text-sm line-clamp-2">{truncateText(fault.description)}</p>
       </div>
 
       {/* Divider and Date */}
-      <div className="border-t border-gray-200 pt-2">
+      <div className="border-t border-gray-200 pt-2.5">
         <p className="text-xs text-gray-500">
           Reported on <span className="text-blue-600 font-semibold">{reportedDate}</span>
         </p>

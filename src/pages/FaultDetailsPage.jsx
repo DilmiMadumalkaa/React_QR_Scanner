@@ -60,8 +60,8 @@ const FaultDetailsPage = () => {
       <div className="absolute inset-0 bg-gray-50/50"></div>
 
       <Navbar logout={logout} user={user} />
-      <main className="relative z-10 pt-24 px-6 pb-16 max-w-5xl mx-auto">
-        <header className="text-center mb-[35px] mt-5">
+      <main className="relative z-10 pt-4 px-6 pb-16 max-w-5xl mx-auto">
+        <header className="text-center mb-[35px] mt-">
           {/* <p className="opacity-85 text-[15px]">Fault Details</p> */}
           <h1 className="text-4xl font-bold">Complaint Details</h1>
           <p className="opacity-85 text-[15px] mt-3">

@@ -1,12 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function AssetList({
-  assets = [],
-  onAssetClick,
-  basePath ,
-}) {
+export default function AssetList({ assets = [], onAssetClick, basePath }) {
   const navigate = useNavigate();
+
+  const handleReportFault = (e, asset) => {
+    e.stopPropagation(); // Prevent card click
+    navigate("/logfault", {
+      state: { asset },
+    });
+  };
 
   const handleClick = (asset) => {
     if (onAssetClick) return onAssetClick(asset);
@@ -17,22 +20,18 @@ export default function AssetList({
     <div className="w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {assets.map((asset) => (
-          <button
+          <div
             key={asset.id}
-            type="button"
-            onClick={() => handleClick(asset)}
-            className="w-full text-left rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md hover:-translate-y-0.5 hover:duration-300 focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md hover:-translate-y-0.5 hover:duration-300"
           >
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex items-start gap-4 min-w-0">
                 <div className="mt-0.5">
                   <TypeIcon type={asset.type} />
                 </div>
 
                 <div className="min-w-0">
-                  <p className=" font-semibold text-gray-900">
-                    {asset.name}
-                  </p>
+                  <p className="font-semibold text-gray-900">{asset.name}</p>
                   <p className="mt-1 text-sm text-gray-500">
                     Asset ID:{" "}
                     <span className="font-medium text-gray-700">
@@ -44,7 +43,16 @@ export default function AssetList({
 
               <StatusBadge status={asset.status} />
             </div>
-          </button>
+
+            {/* Report Fault Button */}
+            <button
+              type="button"
+              onClick={(e) => handleReportFault(e, asset)}
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[#050E3C] rounded-md hover:bg-gray-100 transition-all font-medium text-xs active:scale-95"
+            >
+              Report Fault
+            </button>
+          </div>
         ))}
       </div>
 

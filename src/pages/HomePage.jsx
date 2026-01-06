@@ -3,15 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../services/authService";
 import Navbar from "../components/common/navbar";
 import Sidebar from "../components/Sidebar";
+
 import HomeCard from "../components/HomeCard";
 import MyComplaintsCard from "../components/MyComplaintsCard";
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  
-  const total = 7;
-  const subtitle = "All reported issues";
 
   return (
     <div className="min-h-screen bg-white overflow-hidden relative text-gray-800">
@@ -29,7 +27,7 @@ export default function HomePage() {
       /> */}
 
       {/* Main Content */}
-      <main className="pt-24 justify-center relative z-10 mx-5">
+      <main className="pt-2 justify-center relative z-10 mx-5">
         <header className="text-center mb-[35px] mt-5">
           <p className="opacity-85 text-[15px]">Welcome to</p>
           <h1 className="text-4xl font-bold">Location Fault Logger</h1>
@@ -95,14 +93,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-
-        <style jsx>{`
-          @keyframes fadeIn {
-            to {
-              opacity: 1;
-            }
-          }
-        `}</style>
       </main>
     </div>
   );

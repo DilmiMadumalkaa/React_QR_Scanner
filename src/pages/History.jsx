@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+
 import { useAuth } from '../services/authService';
 import Navbar from "../components/common/navbar";
 import Sidebar from '../components/Sidebar';
 
+
+
 const History = () => {
-    const { user, logout } = useAuth();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [scanHistory, setScanHistory] = useState([]);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [confirmAction, setConfirmAction] = useState(null);
@@ -52,28 +53,10 @@ const History = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white overflow-hidden relative text-gray-800">
-            <div className="absolute inset-0 bg-gray-50/50"></div>
-            
-            {/* Navbar */}
-            <Navbar logout={logout} user={user} />
-
-            {/* Sidebar */}
-            <Sidebar
-                user={user}
-                logout={logout}
-                isOpen={isSidebarOpen}
-                setIsOpen={setIsSidebarOpen}
-            />
-
-            {/* Main Content */}
-            <main className="lg:ml-64 p-10 pt-24 relative z-10">
-                <header className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800">Scan History</h1>
-                    <p className="text-gray-600 mt-2">
-                        Your scanned QR code entries
-                    </p>
-                </header>
+        <>
+            <header className="text-center mb-8">
+                <h1 className="text-3xl font-bold text-gray-800">Scan History</h1>
+            </header>
 
                 {scanHistory.length > 0 && (
                     <div className="flex justify-end mb-4 max-w-4xl mx-auto">
@@ -86,9 +69,9 @@ const History = () => {
                     </div>
                 )}
 
-                <div className="max-w-4xl mx-auto">
+                <div className="max-w-6xl mx-auto">
                     {scanHistory.length === 0 ? (
-                        <div className="py-16 px-6 bg-white border border-gray-200 rounded-xl text-center shadow-sm">
+                        <div className="py-16 mx-5 px-6 bg-white border border-gray-200 rounded-xl text-center shadow-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
@@ -96,55 +79,64 @@ const History = () => {
                             <p className="text-gray-400 text-sm mt-2">Start scanning QR codes to see them here</p>
                         </div>
                     ) : (
-                        <div className="space-y-4">
-                            {scanHistory.map((scan) => (
-                                <div key={scan.id} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
-                                    <div className="flex items-start justify-between gap-4">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-2 mb-3">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#050E3C]" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm2 2V5h1v1H5zM3 13a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm2 2v-1h1v1H5zM13 3a1 1 0 00-1 1v3a1 1 0 001 1h3a1 1 0 001-1V4a1 1 0 00-1-1h-3zm1 2v1h1V5h-1z" clipRule="evenodd" />
-                                                    <path d="M11 4a1 1 0 10-2 0v1a1 1 0 002 0V4zM10 7a1 1 0 011 1v1h2a1 1 0 110 2h-3a1 1 0 01-1-1V8a1 1 0 011-1zM16 9a1 1 0 100 2 1 1 0 000-2zM9 13a1 1 0 011-1h1a1 1 0 110 2v2a1 1 0 11-2 0v-3zM7 11a1 1 0 100-2H4a1 1 0 100 2h3zM17 13a1 1 0 01-1 1h-2a1 1 0 110-2h2a1 1 0 011 1zM16 17a1 1 0 100-2h-3a1 1 0 100 2h3z" />
-                                                </svg>
-                                                <span className="text-sm font-semibold text-gray-700">QR Code Data</span>
-                                            </div>
-                                            <p className="text-gray-800 break-words bg-gray-50 p-3 rounded-lg border border-gray-200 font-mono text-sm">
-                                                {scan.qrCode}
-                                            </p>
-                                        </div>
-                                        <div className="flex flex-col items-end gap-3">
-                                            <div className="text-right text-sm text-gray-500">
-                                                <div className="flex items-center gap-1 mb-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                        <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-                                                    </svg>
-                                                    <span>{scan.date}</span>
-                                                </div>
-                                                <div className="flex items-center gap-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                                                    </svg>
-                                                    <span>{scan.time}</span>
-                                                </div>
-                                            </div>
-                                            <button
-                                                onClick={() => deleteItem(scan.id)}
-                                                className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all group"
-                                                title="Delete scan"
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+                        <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead className="bg-gray-50 border-b border-gray-200">
+                                        <tr>
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"></th>
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                QR Code Data
+                                            </th>
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                Date
+                                            </th>
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                Time
+                                            </th>
+                                            <th className="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200">
+                                        {scanHistory.map((scan, index) => (
+                                            <tr key={scan.id} className="hover:bg-gray-50 transition-colors">
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    {index + 1}
+                                                </td>
+                                                <td className="px-6 py-4 text-sm text-gray-900">
+                                                    <div className="max-w-md break-words font-mono bg-gray-50 px-3 py-2 rounded border border-gray-200">
+                                                        {scan.qrCode}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                                    <div className="flex items-center gap-2">
+                                                        {scan.date}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                                    <div className="flex items-center gap-2">
+                                                        {scan.time}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-center">
+                                                    <button
+                                                        onClick={() => deleteItem(scan.id)}
+                                                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all text-sm font-medium"
+                                                        title="Delete scan"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     )}
                 </div>
-            </main>
-
             {/* Confirmation Modal */}
             {showConfirmModal && (
                 <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -177,7 +169,7 @@ const History = () => {
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 }
 

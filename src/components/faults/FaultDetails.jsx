@@ -35,7 +35,7 @@ const FaultDetails = ({ fault }) => {
         {/* Header with ID and Status */}
         <div className="flex justify-between items-start mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Fault #{fault.id}</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Fault {fault.id}</h1>
             <p className="text-gray-500 text-sm mt-1">
               Reported on {reportedDate}
             </p>
