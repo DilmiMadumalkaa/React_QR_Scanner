@@ -44,7 +44,7 @@ export default function LocationPage() {
             Building A
           </h1>
           <p className="mt-1 text-md text-gray-500 text-center">
-            Digital Platform Section
+            Floor - Room Name
           </p>
 
           {/* Add New Asset Button */}
