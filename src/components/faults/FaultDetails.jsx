@@ -2,10 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const statusColors = {
-  PENDING: { bg: "bg-red-600", text: "text-white", border: "border-red-600", icon: "⚠️" },
-  IN_PROGRESS: { bg: "bg-blue-950", text: "text-white", border: "border-blue-950", icon: "⏱" },
-  COMPLETED: { bg: "bg-green-600", text: "text-white", border: "border-green-600", icon: "✅" },
-  REJECTED: { bg: "bg-red-600", text: "text-white", border: "border-red-600", icon: "❌" },
+  PENDING: { bg: "bg-red-600", text: "text-white", border: "border-red-600"},
+  IN_PROGRESS: { bg: "bg-blue-950", text: "text-white", border: "border-blue-950"},
+  COMPLETED: { bg: "bg-green-600", text: "text-white", border: "border-green-600"},
+  REJECTED: { bg: "bg-red-600", text: "text-white", border: "border-red-600"},
 };
 
 const FaultDetails = ({ fault }) => {
