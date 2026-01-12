@@ -6,7 +6,6 @@ const statusColors = {
     bg: "bg-red-600",       // Bold red background
     border: "border-red-600",
     text: "text-white",     // White text for contrast
-    icon: "⚠️",
   },
   IN_PROGRESS: {
     bg: "bg-blue-950",      // Dark navy blue background
@@ -18,13 +17,11 @@ const statusColors = {
     bg: "bg-green-600",     // Green background
     border: "border-green-600",
     text: "text-white",     // White text
-    icon: "✅",
   },
   REJECTED: {
     bg: "bg-red-600",       // Same as pending
     border: "border-red-600",
     text: "text-white",
-    icon: "❌",
   },
 };
 
@@ -49,9 +46,7 @@ const FaultCard = ({ fault }) => {
       className={`border-l-4 ${status.border} bg-white p-5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform duration-300 cursor-pointer group relative`}
       title={fault.description}
     >
-      {/* Status icon */}
-      <div className="absolute -top-3 -left-3 text-2xl">{status.icon}</div>
-
+      
       {/* Header */}
       <div className="flex justify-between items-start mb-4">
         <h3 className="text-base font-bold text-gray-900">Fault {fault.id}</h3>

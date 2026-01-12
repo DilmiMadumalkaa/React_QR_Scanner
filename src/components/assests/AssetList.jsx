@@ -47,7 +47,11 @@ export default function AssetList({ assets = [], onAssetClick, basePath }) {
             {/* Report Fault Button */}
             <button
               type="button"
-              onClick={(e) => handleReportFault(e, asset)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleReportFault(e, asset); // keep if you need logic
+                navigate("/logfault");       // ✅ navigate here
+              }}
               className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[#050E3C] rounded-md hover:bg-gray-100 transition-all font-medium text-xs active:scale-95"
             >
               Report Fault
