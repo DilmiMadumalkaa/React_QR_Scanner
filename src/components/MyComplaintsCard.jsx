@@ -1,4 +1,3 @@
-// MyComplaintsCard.jsx
 import React from "react";
 
 function StatusBadge({ status }) {

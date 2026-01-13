@@ -1,33 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Define color codes for status
 const statusColors = {
-  PENDING: { bg: "bg-red-600", text: "text-white", border: "border-red-600" },
-  IN_PROGRESS: { bg: "bg-blue-950", text: "text-white", border: "border-blue-950" },
-  RESOLVED: { bg: "bg-green-600", text: "text-white", border: "border-green-600" },
-  REJECTED: { bg: "bg-red-600", text: "text-white", border: "border-red-600" },
+  PENDING: {
+    bg: "bg-red-600",       // Bold red background
+    border: "border-red-600",
+    text: "text-white",     // White text for contrast
+  },
+  IN_PROGRESS: {
+    bg: "bg-blue-950",      // Dark navy blue background
+    border: "border-blue-950",
+    text: "text-white",     // White text
+    icon: "⏱",
+  },
+  COMPLETED: {
+    bg: "bg-green-600",     // Green background
+    border: "border-green-600",
+    text: "text-white",     // White text
+  },
+  REJECTED: {
+    bg: "bg-red-600",       // Same as pending
+    border: "border-red-600",
+    text: "text-white",
+  },
 };
-
-function StatusBadge({ status }) {
-  const base =
-    "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold border";
-
-  const statusStyle = statusColors[status] || { bg: "bg-gray-500", text: "text-white", border: "border-gray-500" };
-
-  return (
-    <span className={`${base} ${statusStyle.bg} ${statusStyle.text} ${statusStyle.border}`}>
-      {status}
-    </span>
-  );
-}
 
 const FaultCard = ({ fault }) => {
   const navigate = useNavigate();
+  const [expanded, setExpanded] = useState(false);
 
-  const truncateText = (text, maxLength = 80) => {
-    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
-  };
+  const truncateText = (text, maxLength = 100) =>
+    text.length > maxLength && !expanded ? text.substring(0, maxLength) + "..." : text;
 
   const reportedDate = new Date(fault.reportedDate).toLocaleDateString("en-US", {
     year: "numeric",
@@ -35,50 +38,59 @@ const FaultCard = ({ fault }) => {
     day: "numeric",
   });
 
+  const status = statusColors[fault.status] || statusColors.PENDING;
+
   return (
     <div
-      onClick={() => navigate(`/faults/${fault.id}`)}
-      className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+      onClick={() => navigate( `/faults/${fault.id}`)}
+      className={`border-l-4 ${status.border} bg-white p-5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform duration-300 cursor-pointer group relative`}
+      title={fault.description}
     >
-      {/* Header: Fault ID and Status Badge */}
+      
+      {/* Header */}
       <div className="flex justify-between items-start mb-4">
+        <h3 className="text-base font-bold text-gray-900">Fault {fault.id}</h3>
+        <span
+          className={`px-3 py-1 text-xs font-semibold rounded-full border ${status.bg} ${status.text} border-transparent`}
+        >
+          {fault.status.replace("_", " ")}
+        </span>
+      </div>
+
+      {/* Asset Info */}
+      <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
         <div>
-          <h3 className="text-base font-bold text-gray-900">Fault #{fault.id}</h3>
-        </div>
-        <StatusBadge status={fault.status} />
-      </div>
-
-      {/* Asset Information Grid */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Asset Type</p>
-          <p className="text-sm text-gray-900 font-semibold mt-1">{fault.assetType}</p>
+          <p className="text-gray-500 uppercase font-semibold text-xs">Asset Type</p>
+          <p className="text-gray-900 font-medium">{fault.assetType}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Asset ID</p>
-          <p className="text-sm text-gray-900 font-semibold mt-1">{fault.assetId}</p>
+          <p className="text-gray-500 uppercase font-semibold text-xs">Asset ID</p>
+          <p className="text-gray-900 font-medium">{fault.assetId}</p>
+        </div>
+        <div>
+          <p className="text-gray-500 uppercase font-semibold text-xs">Location</p>
+          <p className="text-gray-900 font-medium">{fault.locationName}</p>
+        </div>
+        <div>
+          <p className="text-gray-500 uppercase font-semibold text-xs">Reported</p>
+          <p className="text-gray-700 font-medium">{reportedDate}</p>
         </div>
       </div>
 
-      {/* Location */}
-      <div className="mb-4">
-        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Location</p>
-        <p className="text-sm text-gray-900 mt-1">{fault.locationName}</p>
-      </div>
-
-      {/* Description (truncated to 80 chars) */}
-      <div className="mb-4">
-        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Description</p>
-        <p className="text-sm text-gray-700 mt-1 line-clamp-2">
-          {truncateText(fault.description)}
-        </p>
-      </div>
-
-      {/* Date reported */}
-      <div className="pt-3 border-t border-gray-200">
-        <p className="text-xs text-gray-500">
-          Reported on <span className="text-gray-700 font-semibold">{reportedDate}</span>
-        </p>
+      {/* Description */}
+      <div>
+        <p className="text-gray-600 text-sm">{truncateText(fault.description)}</p>
+        {fault.description.length > 100 && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setExpanded(!expanded);
+            }}
+            className="text-blue-950 font-semibold text-xs mt-1"
+          >
+            {expanded ? "Show Less" : "Read More"}
+          </button>
+        )}
       </div>
     </div>
   );
