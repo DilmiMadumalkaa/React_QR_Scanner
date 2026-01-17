@@ -17,12 +17,10 @@ const FaultDetailsPage = () => {
         let data = await getFaultById(faultId);
 
         // ✅ Force third fault to COMPLETED for testing (green)
-        // You can replace this with a real check for completed faults
         if (data && Number(faultId) === 3) {
           data.status = "COMPLETED";
         }
 
-        // Ensure status matches statusColors keys
         if (data && data.status) {
           data.status = data.status.toUpperCase();
         }
@@ -38,43 +36,57 @@ const FaultDetailsPage = () => {
     fetchFault();
   }, [faultId]);
 
+  /* ---------------- Loading State ---------------- */
   if (loading)
     return (
       <div className="min-h-screen bg-white relative text-gray-800">
         <div className="absolute inset-0 bg-gray-50/50"></div>
         <Navbar logout={logout} user={user} />
-        <div className="pt-32 px-6 flex items-center justify-center min-h-[calc(100vh-96px)]">
+
+        <div className="pt-28 sm:pt-32 px-4 sm:px-6 flex items-center justify-center min-h-[calc(100vh-96px)]">
           <div className="flex flex-col items-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600 mb-4"></div>
-            <p className="text-gray-600">Loading fault details...</p>
+            <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-blue-600 mb-4"></div>
+            <p className="text-gray-600 text-sm sm:text-base">
+              Loading fault details...
+            </p>
           </div>
         </div>
       </div>
     );
 
+  /* ---------------- Not Found ---------------- */
   if (!fault)
     return (
       <div className="min-h-screen bg-white relative text-gray-800">
         <div className="absolute inset-0 bg-gray-50/50"></div>
         <Navbar logout={logout} user={user} />
-        <div className="pt-32 px-6 flex items-center justify-center min-h-[calc(100vh-96px)]">
-          <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm text-center max-w-md">
-            <p className="text-gray-900 text-lg font-semibold">Fault not found</p>
-            <p className="text-gray-500 mt-2">The fault details could not be retrieved.</p>
+
+        <div className="pt-28 sm:pt-32 px-4 sm:px-6 flex items-center justify-center min-h-[calc(100vh-96px)]">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-sm text-center max-w-md">
+            <p className="text-gray-900 text-base sm:text-lg font-semibold">
+              Fault not found
+            </p>
+            <p className="text-gray-500 mt-2 text-sm sm:text-base">
+              The fault details could not be retrieved.
+            </p>
           </div>
         </div>
       </div>
     );
 
+  /* ---------------- Main Page ---------------- */
   return (
     <div className="min-h-screen bg-white relative text-gray-800">
       <div className="absolute inset-0 bg-gray-50/50"></div>
 
       <Navbar logout={logout} user={user} />
-      <main className="relative z-10 pt-4 px-6 pb-16 max-w-5xl mx-auto">
-        <header className="text-center mb-[35px]">
-          <h1 className="text-4xl font-bold">Complaint Details</h1>
-          <p className="opacity-85 text-[15px] mt-3">
+
+      <main className="relative z-10 pt-6 sm:pt-8 px-4 sm:px-6 md:px-10 lg:px-0 pb-16 max-w-5xl mx-auto">
+        <header className="text-center mb-8 sm:mb-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+            Complaint Details
+          </h1>
+          <p className="opacity-85 text-sm sm:text-base mt-2 sm:mt-3">
             View complete information about your reported fault
           </p>
         </header>
