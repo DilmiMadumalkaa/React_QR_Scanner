@@ -30,7 +30,7 @@ const FaultDetails = ({ fault }) => {
       </button>
 
       {/* Main Card */}
-      <div className={`border-l-4 ${statusStyle.border} bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all`}>
+      <div className={`border-l-2 ${statusStyle.border} bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all`}>
         {/* Header */}
         <div className="flex justify-between items-start mb-6">
           <div className="flex items-center gap-3">
