@@ -29,7 +29,7 @@ const FaultCard = ({ fault }) => {
   const [expanded, setExpanded] = useState(false);
 
   const truncateText = (text, maxLength = 100) =>
-    text?.length > maxLength && !expanded
+    text.length > maxLength && !expanded
       ? text.substring(0, maxLength) + "..."
       : text;
 
@@ -44,62 +44,73 @@ const FaultCard = ({ fault }) => {
   return (
     <div
       onClick={() => navigate(`/faults/${fault.id}`)}
-      className={`border-l-4 ${status.border} bg-white p-5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-transform duration-300 cursor-pointer group relative`}
-      title={fault.description}
+      className={`border-l-2 ${status.border} bg-white rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer p-5`}
     >
       {/* Header */}
-      <div className="flex justify-between items-start mb-4">
-        <h3 className="text-base font-bold text-gray-900">
+      <div className="flex justify-between items-center mb-3">
+        <h3 className="text-[15px] font-bold text-gray-800">
           Fault {fault.id}
         </h3>
+
         <span
-          className={`px-3 py-1 text-xs font-semibold rounded-full ${status.bg} ${status.text}`}
+          className={`px-3 py-1 text-[11px] font-semibold rounded-full ${status.bg} ${status.text}`}
         >
           {fault.status.replace("_", " ")}
         </span>
       </div>
 
       {/* Asset Info */}
-      <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 text-sm">
         <div>
-          <p className="text-gray-500 uppercase font-semibold text-xs">
+          <p className="text-gray-500 uppercase font-semibold text-[11px]">
             Asset Type
           </p>
-          <p className="text-gray-900 font-medium">{fault.assetType}</p>
+          <p className="text-gray-800 font-medium">
+            {fault.assetType}
+          </p>
         </div>
+
         <div>
-          <p className="text-gray-500 uppercase font-semibold text-xs">
+          <p className="text-gray-500 uppercase font-semibold text-[11px]">
             Asset ID
           </p>
-          <p className="text-gray-900 font-medium">{fault.assetId}</p>
+          <p className="text-gray-800 font-medium">
+            {fault.assetId}
+          </p>
         </div>
+
         <div>
-          <p className="text-gray-500 uppercase font-semibold text-xs">
+          <p className="text-gray-500 uppercase font-semibold text-[11px]">
             Location
           </p>
-          <p className="text-gray-900 font-medium">{fault.locationName}</p>
+          <p className="text-gray-800 font-medium">
+            {fault.locationName}
+          </p>
         </div>
+
         <div>
-          <p className="text-gray-500 uppercase font-semibold text-xs">
+          <p className="text-gray-500 uppercase font-semibold text-[11px]">
             Reported
           </p>
-          <p className="text-gray-700 font-medium">{reportedDate}</p>
+          <p className="text-gray-700 font-medium">
+            {reportedDate}
+          </p>
         </div>
       </div>
 
       {/* Description */}
       <div>
-        <p className="text-gray-600 text-sm">
+        <p className="text-gray-600 text-[13px] leading-relaxed">
           {truncateText(fault.description)}
         </p>
 
-        {fault.description?.length > 100 && (
+        {fault.description.length > 100 && (
           <button
             onClick={(e) => {
               e.stopPropagation();
               setExpanded(!expanded);
             }}
-            className="text-blue-950 font-semibold text-xs mt-1"
+            className="text-blue-950 font-semibold text-xs mt-2 hover:underline"
           >
             {expanded ? "Show Less" : "Read More"}
           </button>
