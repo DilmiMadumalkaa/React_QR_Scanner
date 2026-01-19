@@ -33,7 +33,7 @@ export default function LogFaultPage() {
           <button
             type="button"
             onClick={() => navigate("/location")}
-            className="flex flex-row items-center gap-2 text-[#050E3C] mb-2"
+            className="flex flex-row items-center gap-1 text-[#050E3C] mb-2 text-md font-semibold"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -56,19 +56,6 @@ export default function LogFaultPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Fault Description */}
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Fault Description <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                required
-                rows={4}
-                placeholder="Describe the fault..."
-                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-blue-200 focus:outline-none"
-              />
-            </div>
-
             {/* Fault Type */}
             <div>
               <label className="block text-sm font-medium mb-1">
@@ -82,8 +69,20 @@ export default function LogFaultPage() {
                 <option>Work</option>
                 <option>Fault</option>
                 <option>Service</option>
-                <option>Other</option>
               </select>
+            </div>
+
+            {/* Fault Details */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Fault Details <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                required
+                rows={4}
+                placeholder="Briefly Mention the Fault"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-blue-200 focus:outline-none"
+              />
             </div>
 
             {/* Priority */}

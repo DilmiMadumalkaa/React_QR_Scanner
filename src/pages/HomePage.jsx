@@ -20,12 +20,27 @@ export default function HomePage() {
   });
 
   // Popup state
-  const [popup,setPopup] = useState({ show: false, message: "", asset: null, isNew: false });
+  const [popup, setPopup] = useState({
+    show: false,
+    message: "",
+    asset: null,
+    isNew: false,
+  });
 
   // Example existing assets
   const existingAssets = [
-    { assetID: "A001", building: "Building A", floor: "1", assetName: "AC Unit" },
-    { assetID: "B002", building: "Building B", floor: "2", assetName: "Generator" },
+    {
+      assetID: "A001",
+      building: "Building A",
+      floor: "1",
+      assetName: "AC Unit",
+    },
+    {
+      assetID: "B002",
+      building: "Building B",
+      floor: "2",
+      assetName: "Generator",
+    },
   ];
 
   // Handle search button click
@@ -80,7 +95,7 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="pt-2 justify-center relative z-10 mx-5">
-        <header className="text-center mb-[35px] mt-5">
+        <header className="text-center mb-[35px] mt-1">
           <p className="opacity-85 text-[15px]">Welcome to</p>
           <h1 className="text-4xl font-bold">Location Fault Logger</h1>
           <p className="opacity-85 text-[15px] mt-3">
@@ -106,10 +121,10 @@ export default function HomePage() {
           </button>
         </div>
 
-        <div className="text-center mt-3"> or </div>       
+        <div className="text-center mt-1"> or </div>
 
         {/* Search & Filters */}
-        <div className="w-full max-w-4xl mx-auto mt-8 p-4 border border-bg-gray-50 rounded-lg shadow-sm">
+        <div className="w-full max-w-4xl mx-auto mt-2 p-4 border border-bg-gray-50 rounded-lg shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Search Assets</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
             {/* Building Dropdown */}
@@ -133,7 +148,9 @@ export default function HomePage() {
               <select
                 className="w-full border border-gray-300 rounded px-3 py-2"
                 value={filters.floor}
-                onChange={(e) => setFilters({ ...filters, floor: e.target.value })}
+                onChange={(e) =>
+                  setFilters({ ...filters, floor: e.target.value })
+                }
               >
                 <option value="">Select Floor</option>
                 <option value="1">1</option>
@@ -165,7 +182,9 @@ export default function HomePage() {
                 placeholder="Enter Asset ID"
                 className="w-full border border-gray-300 rounded px-3 py-2"
                 value={filters.assetID}
-                onChange={(e) => setFilters({ ...filters, assetID: e.target.value })}
+                onChange={(e) =>
+                  setFilters({ ...filters, assetID: e.target.value })
+                }
               />
             </div>
 
@@ -181,43 +200,40 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Grid: Home Cards & My Complaints */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5 justify-items-center items-center">
-          {/* Left: Status cards */}
-          <div className="px-4 sm:px-6 lg:px-10 mt-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 items-center">
-              <HomeCard
-                title="Total Faults"
-                icon="!"
-                value={7}
-                subtitle="All reported issues"
-                iconBg="bg-red-50"
-                iconColor="text-red-600"
-              />
-              <HomeCard
-                title="In Progress"
-                icon="⏱"
-                value={2}
-                subtitle="Currently being resolved"
-                iconBg="bg-blue-50"
-                iconColor="text-blue-950"
-              />
-              <HomeCard
-                title="Completed Faults"
-                icon="✓"
-                value={2}
-                subtitle="Successfully resolved"
-                iconBg="bg-green-50"
-                iconColor="text-green-600"
-              />
-            </div>
+        {/* Left: Status cards */}
+        <div className="flex px-4 sm:px-6 lg:px-10 mt-5 justify-center">
+          <div className="w-[900px] grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 items-center">
+            <HomeCard
+              title="Total Faults"
+              icon="!"
+              value={7}
+              subtitle="All reported issues"
+              iconBg="bg-red-50"
+              iconColor="text-red-600"
+            />
+            <HomeCard
+              title="In Progress"
+              icon="⏱"
+              value={2}
+              subtitle="Currently being resolved"
+              iconBg="bg-blue-50"
+              iconColor="text-blue-950"
+            />
+            <HomeCard
+              title="Completed Faults"
+              icon="✓"
+              value={2}
+              subtitle="Successfully resolved"
+              iconBg="bg-green-50"
+              iconColor="text-green-600"
+            />
           </div>
+        </div>
 
-          {/* My Complaints */}
-          <div className="px-4 sm:px-6 lg:px-10 w-full">
-            <div className="w-full max-w-xl lg:max-w-none mx-auto mt-5">
-              <MyComplaintsCard />
-            </div>
+        {/* My Complaints */}
+        <div className="px-4 sm:px-6 lg:px-10 w-full">
+          <div className="w-[900px] max-w-xl lg:max-w-none mx-auto mt-5">
+            <MyComplaintsCard />
           </div>
         </div>
       </main>
@@ -233,7 +249,6 @@ export default function HomePage() {
             className="relative bg-white rounded-xl shadow-xl p-6 w-96 mx-4 animate-scaleUp"
             onClick={(e) => e.stopPropagation()}
           >
-
             <div className="flex flex-col items-center">
               {/* Icon */}
               <div className="w-16 h-16 flex items-center justify-center rounded-full mb-4 bg-[#050E3C] text-white">
@@ -266,7 +281,7 @@ export default function HomePage() {
                     e.stopPropagation();
                     handlePopupConfirm();
                   }}
-                   className="flex-1 bg-[#050E3C] hover:bg-[#050E3C]/90 text-white font-medium py-2 rounded-lg transition"
+                  className="flex-1 bg-[#050E3C] hover:bg-[#050E3C]/90 text-white font-medium py-2 rounded-lg transition"
                 >
                   {popup.isNew ? "Add Asset" : "Report Fault"}
                 </button>

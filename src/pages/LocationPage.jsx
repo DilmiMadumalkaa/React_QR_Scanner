@@ -38,7 +38,23 @@ export default function LocationPage() {
       {/* Navbar */}
       <Navbar logout={logout} user={user} />
       <main className="pt-2 justify-center relative z-10">
-        <div className="px-4 sm:px-6 py-6">
+        <div className="px-2 sm:px-6">
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="flex flex-row items-center gap-1 text-[#050E3C] mb-4 text-md font-semibold sm:mb-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="15px"
+              viewBox="0 -960 960 960"
+              width="15px"
+              fill="#050E3C"
+            >
+              <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+            </svg>
+            Back
+          </button>
           <h1 className="text-3xl font-bold text-gray-900 text-center">
             Building A
           </h1>
