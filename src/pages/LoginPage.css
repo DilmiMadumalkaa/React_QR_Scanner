@@ -1,0 +1,76 @@
+/* Background */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Floating blobs (background animation) */
+.floating-blobs .blob {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: float 8s infinite ease-in-out;
+  top: -50px;
+  left: -50px;
+}
+
+.floating-blobs .blob.two {
+  width: 260px;
+  height: 260px;
+  bottom: -40px;
+  right: -40px;
+  animation-duration: 10s;
+}
+
+/* Floating animation */
+@keyframes float {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(40px, -30px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Glassmorphism login box */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.19);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  padding: 40px 32px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+}
+
+/* Title & subtitle */
+.login-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.login-subtitle {
+  font-size: 15px;
+  color: #eaeaea;
+  margin-bottom: 25px;
+}
+
+/* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
