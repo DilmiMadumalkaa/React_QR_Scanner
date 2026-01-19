@@ -163,7 +163,7 @@ export default function ScanPage() {
       {/* Body Section */}
       <div className="flex flex-col items-center justify-center">
         {/* Video Scanner */}
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md px-4">
           <div className="bg-gray-100 rounded-2xl p-4 mt-3 shadow-lg border-2 border-[#050E3C]/10">
             <div
               id="qr-reader"
@@ -171,10 +171,10 @@ export default function ScanPage() {
               className="max-w-[300px] mx-auto rounded-lg overflow-hidden"
             />
             {!isCameraActive && (
-              <div className="flex flex-col items-center justify-center min-h-[250px] bg-gray-200 rounded-lg">
+              <div className="flex flex-col items-center justify-center min-h-[180px] sm:min-h-[250px] bg-gray-200 rounded-lg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-20 w-20 text-[#050E3C] mb-4"
+                  className="h-12 w-12 sm:h-20 sm:w-20 text-[#050E3C] mb-3 sm:mb-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -186,7 +186,7 @@ export default function ScanPage() {
                     d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"
                   />
                 </svg>
-                <p className="text-[#050E3C] font-medium text-lg">
+                <p className="text-[#050E3C] font-medium text-sm sm:text-lg text-center px-4">
                   Click Start Camera to begin scanning
                 </p>
               </div>
