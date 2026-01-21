@@ -145,108 +145,108 @@ export default function HomePage() {
             </div>
           </div>
 
-        {/* Right Column: Scan QR and Search Assets */}
-        <div className="space-y-6">
-          {/* Scan QR Button */}
-          <div className="flex justify-center">
-            <button
-              onClick={() => navigate("/scan")}
-              className="flex items-center justify-center w-[300px] gap-2 bg-[#050E3C] text-white px-6 py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-[#050E3C]/90 transition-all shadow-lg"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 -960 960 960"
-                fill="white"
+          {/* Right Column: Scan QR and Search Assets */}
+          <div className="space-y-6">
+            {/* Scan QR Button */}
+            <div className="flex justify-center">
+              <button
+                onClick={() => navigate("/scan")}
+                className="flex items-center justify-center w-[300px] gap-2 bg-[#050E3C] text-white px-6 py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-[#050E3C]/90 transition-all shadow-lg"
               >
-                <path d="M520-120v-80h80v80h-80Zm-80-80v-200h80v200h-80Zm320-120v-160h80v160h-80Zm-80-160v-80h80v80h-80Zm-480 80v-80h80v80h-80Zm-80-80v-80h80v80h-80Zm360-280v-80h80v80h-80ZM180-660h120v-120H180v120Zm-60 60v-240h240v240H120Zm60 420h120v-120H180v120Zm-60 60v-240h240v240H120Zm540-540h120v-120H660v120Zm-60 60v-240h240v240H600Z" />
-              </svg>
-              Scan the QR Code
-            </button>
-          </div>
-
-          <div className="text-center text-sm sm:text-base"> or </div>
-
-          {/* Search & Filters */}
-          <div className="p-4 border border-bg-gray-50 rounded-lg shadow-sm">
-            <h2 className="text-base sm:text-lg font-semibold mb-4">
-              Search Assets
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Building Dropdown */}
-              <div>
-                <select
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm sm:text-base"
-                  value={filters.building}
-                  onChange={(e) =>
-                    setFilters({ ...filters, building: e.target.value })
-                  }
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 -960 960 960"
+                  fill="white"
                 >
-                  <option value="">Select Building</option>
-                  <option value="Building A">Building A</option>
-                  <option value="Building B">Building B</option>
-                  <option value="Building C">Building C</option>
-                </select>
-              </div>
+                  <path d="M520-120v-80h80v80h-80Zm-80-80v-200h80v200h-80Zm320-120v-160h80v160h-80Zm-80-160v-80h80v80h-80Zm-480 80v-80h80v80h-80Zm-80-80v-80h80v80h-80Zm360-280v-80h80v80h-80ZM180-660h120v-120H180v120Zm-60 60v-240h240v240H120Zm60 420h120v-120H180v120Zm-60 60v-240h240v240H120Zm540-540h120v-120H660v120Zm-60 60v-240h240v240H600Z" />
+                </svg>
+                Scan the QR Code
+              </button>
+            </div>
 
-              {/* Floor Dropdown */}
-              <div>
-                <select
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm sm:text-base"
-                  value={filters.floor}
-                  onChange={(e) =>
-                    setFilters({ ...filters, floor: e.target.value })
-                  }
-                >
-                  <option value="">Select Floor</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select>
-              </div>
+            <div className="text-center text-sm sm:text-base"> or </div>
 
-              {/* Asset Name Dropdown */}
-              <div>
-                <select
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm sm:text-base"
-                  value={filters.assetName}
-                  onChange={(e) =>
-                    setFilters({ ...filters, assetName: e.target.value })
-                  }
-                >
-                  <option value="">Select Asset</option>
-                  <option value="AC Unit">AC Unit</option>
-                  <option value="Fire Extinguisher">Fire Extinguisher</option>
-                  <option value="Generator">Generator</option>
-                </select>
-              </div>
+            {/* Search & Filters */}
+            <div className="p-4 border border-bg-gray-50 rounded-lg shadow-sm">
+              <h2 className="text-base sm:text-lg font-semibold mb-4">
+                Search Assets
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Building Dropdown */}
+                <div>
+                  <select
+                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm sm:text-base"
+                    value={filters.building}
+                    onChange={(e) =>
+                      setFilters({ ...filters, building: e.target.value })
+                    }
+                  >
+                    <option value="">Select Building</option>
+                    <option value="Building A">Building A</option>
+                    <option value="Building B">Building B</option>
+                    <option value="Building C">Building C</option>
+                  </select>
+                </div>
 
-              {/* Asset ID Input */}
-              <div>
-                <input
-                  type="text"
-                  placeholder="Enter Asset ID"
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm sm:text-base"
-                  value={filters.assetID}
-                  onChange={(e) =>
-                    setFilters({ ...filters, assetID: e.target.value })
-                  }
-                />
-              </div>
+                {/* Floor Dropdown */}
+                <div>
+                  <select
+                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm sm:text-base"
+                    value={filters.floor}
+                    onChange={(e) =>
+                      setFilters({ ...filters, floor: e.target.value })
+                    }
+                  >
+                    <option value="">Select Floor</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
 
-              {/* Search Button */}
-              <div className="sm:col-span-2 flex justify-end">
-                <button
-                  onClick={handleSearch}
-                  className="w-[200px] bg-[#050E3C] text-white py-2 px-4 rounded-lg hover:bg-[#050E3C]/90 transition-all text-sm sm:text-base font-medium"
-                >
-                  Search
-                </button>
+                {/* Asset Name Dropdown */}
+                <div>
+                  <select
+                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm sm:text-base"
+                    value={filters.assetName}
+                    onChange={(e) =>
+                      setFilters({ ...filters, assetName: e.target.value })
+                    }
+                  >
+                    <option value="">Select Asset</option>
+                    <option value="AC Unit">AC Unit</option>
+                    <option value="Fire Extinguisher">Fire Extinguisher</option>
+                    <option value="Generator">Generator</option>
+                  </select>
+                </div>
+
+                {/* Asset ID Input */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Enter Asset ID"
+                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm sm:text-base"
+                    value={filters.assetID}
+                    onChange={(e) =>
+                      setFilters({ ...filters, assetID: e.target.value })
+                    }
+                  />
+                </div>
+
+                {/* Search Button */}
+                <div className="sm:col-span-2 flex justify-end">
+                  <button
+                    onClick={handleSearch}
+                    className="w-[200px] bg-[#050E3C] text-white py-2 px-4 rounded-lg hover:bg-[#050E3C]/90 transition-all text-sm sm:text-base font-medium"
+                  >
+                    Search
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </main>
 
       {/* Blue-Themed Popup Modal */}

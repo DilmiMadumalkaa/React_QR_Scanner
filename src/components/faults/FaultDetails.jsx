@@ -1,3 +1,4 @@
+//faultdetails
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -51,21 +52,21 @@ const FaultDetails = ({ fault }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 text-gray-800">
           <div>
             <p className="text-xs uppercase tracking-widest font-semibold text-gray-500">Asset Type</p>
-            <p className="text-lg font-semibold mt-1">{fault.assetType}</p>
+            <p className="text-base font-semibold text-gray-700 leading-relaxed">{fault.assetType}</p>
           </div>
           <div>
             <p className="text-xs uppercase tracking-widest font-semibold text-gray-500">Asset ID</p>
-            <p className="text-lg font-semibold mt-1">{fault.assetId}</p>
+            <p className="text-base font-semibold text-gray-700 leading-relaxed">{fault.assetId}</p>
           </div>
           <div className="md:col-span-2">
             <p className="text-xs uppercase tracking-widest font-semibold text-gray-500">Location</p>
-            <p className="text-lg font-semibold mt-1">{fault.locationName}</p>
+            <p className="text-base font-semibold text-gray-700 leading-relaxed">{fault.locationName}</p>
           </div>
         </div>
 
         {/* Description */}
         <div>
-          <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-widest mb-3">Complete Description</h2>
+          <h2 className="text-xs uppercase tracking-widest font-semibold text-gray-500">Complete Description</h2>
           <p className="text-gray-700 leading-relaxed">{fault.description}</p>
         </div>
       </div>

@@ -1,3 +1,4 @@
+//mycomplaintpage
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/common/navbar";
 import FaultList from "../components/faults/FaultList";
@@ -32,7 +33,6 @@ const MyComplaintsPage = () => {
   }, [user?.uid]);
 
   return (
-
     <div className="min-h-screen bg-gradient-to-b from-gray-0 to-white text-gray-800">
       <Navbar logout={logout} user={user} />
 
