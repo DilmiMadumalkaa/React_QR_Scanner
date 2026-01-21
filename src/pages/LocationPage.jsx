@@ -38,7 +38,23 @@ export default function LocationPage() {
       {/* Navbar */}
       <Navbar logout={logout} user={user} />
       <main className="pt-2 justify-center relative z-10">
-        <div className="px-4 sm:px-6 py-6">
+        <div className="px-2 sm:px-6">
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="flex flex-row items-center gap-1 text-[#050E3C] mb-4 text-md font-semibold sm:mb-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="15px"
+              viewBox="0 -960 960 960"
+              width="15px"
+              fill="#050E3C"
+            >
+              <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+            </svg>
+            Back
+          </button>
           <h1 className="text-3xl font-bold text-gray-900 text-center">
             Building A
           </h1>
@@ -46,14 +62,17 @@ export default function LocationPage() {
             Floor - Room Name
           </p>
 
-          <div className="relative mt-5 flex flex-col gap-2">
-            {/* Search Bar */}
-            <div className="w-full sm:max-w-sm sm:absolute sm:left-1/2 sm:-translate-x-1/2">
+          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3 items-center">
+            {/* Left empty column (for balance on desktop) */}
+            <div className="hidden md:block" />
+
+            {/* Search Bar (centered) */}
+            <div className="w-full md:mx-auto">
               <AssestSearchBar />
             </div>
 
-            {/* Add New Asset Button */}
-            <div className="mt-1 flex justify-center sm:mt-0 sm:justify-end">
+            {/* Add New Asset Button (right aligned) */}
+            <div className="flex justify-center md:justify-end">
               <button
                 onClick={() => navigate("/add-asset")}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#050E3C] text-white rounded-lg hover:bg-[#050E3C]/90 transition-all font-medium shadow-md hover:shadow-lg active:scale-95"

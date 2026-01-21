@@ -50,6 +50,15 @@ export default function AssetList({ assets = [], onAssetClick, basePath }) {
               onClick={(e) => handleReportFault(e, asset)}
               className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[#050E3C] rounded-md hover:bg-gray-100 transition-all font-medium text-xs active:scale-95"
             >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="20px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#050E3C"
+              >
+                <path d="M200-120v-680h360l16 80h224v400H520l-16-80H280v280h-80Zm300-440Zm86 160h134v-240H510l-16-80H280v240h290l16 80Z" />
+              </svg>
               Report Fault
             </button>
           </div>

@@ -20,12 +20,27 @@ export default function HomePage() {
   });
 
   // Popup state
-  const [popup,setPopup] = useState({ show: false, message: "", asset: null, isNew: false });
+  const [popup, setPopup] = useState({
+    show: false,
+    message: "",
+    asset: null,
+    isNew: false,
+  });
 
   // Example existing assets
   const existingAssets = [
-    { assetID: "A001", building: "Building A", floor: "1", assetName: "AC Unit" },
-    { assetID: "B002", building: "Building B", floor: "2", assetName: "Generator" },
+    {
+      assetID: "A001",
+      building: "Building A",
+      floor: "1",
+      assetName: "AC Unit",
+    },
+    {
+      assetID: "B002",
+      building: "Building B",
+      floor: "2",
+      assetName: "Generator",
+    },
   ];
 
   // Handle search button click
@@ -36,7 +51,7 @@ export default function HomePage() {
     }
 
     const assetExists = existingAssets.find(
-      (asset) => asset.assetID === filters.assetID
+      (asset) => asset.assetID === filters.assetID,
     );
 
     if (assetExists) {
@@ -81,8 +96,12 @@ export default function HomePage() {
       {/* Main Content */}
       <main className="pt-2 justify-center relative z-10 mx-5">
         <header className="text-center mb-[35px] mt-5">
-          <p className="opacity-85 text-xs sm:text-sm md:text-[15px]">Welcome to</p>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">Location Fault Logger</h1>
+          <p className="opacity-85 text-xs sm:text-sm md:text-[15px]">
+            Welcome to
+          </p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+            Location Fault Logger
+          </h1>
           <p className="opacity-85 text-xs sm:text-sm md:text-[15px] mt-3">
             Track, report, and monitor location-based issues in real time
           </p>
@@ -150,7 +169,9 @@ export default function HomePage() {
 
             {/* Search & Filters */}
             <div className="p-4 border border-bg-gray-50 rounded-lg shadow-sm">
-              <h2 className="text-base sm:text-lg font-semibold mb-4">Search Assets</h2>
+              <h2 className="text-base sm:text-lg font-semibold mb-4">
+                Search Assets
+              </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Building Dropdown */}
                 <div>
@@ -173,7 +194,9 @@ export default function HomePage() {
                   <select
                     className="w-full border border-gray-300 rounded px-3 py-2 text-sm sm:text-base"
                     value={filters.floor}
-                    onChange={(e) => setFilters({ ...filters, floor: e.target.value })}
+                    onChange={(e) =>
+                      setFilters({ ...filters, floor: e.target.value })
+                    }
                   >
                     <option value="">Select Floor</option>
                     <option value="1">1</option>
@@ -205,7 +228,9 @@ export default function HomePage() {
                     placeholder="Enter Asset ID"
                     className="w-full border border-gray-300 rounded px-3 py-2 text-sm sm:text-base"
                     value={filters.assetID}
-                    onChange={(e) => setFilters({ ...filters, assetID: e.target.value })}
+                    onChange={(e) =>
+                      setFilters({ ...filters, assetID: e.target.value })
+                    }
                   />
                 </div>
 
@@ -235,7 +260,6 @@ export default function HomePage() {
             className="relative bg-white rounded-xl shadow-xl p-6 w-96 mx-4 animate-scaleUp"
             onClick={(e) => e.stopPropagation()}
           >
-
             <div className="flex flex-col items-center">
               {/* Icon */}
               <div className="w-16 h-16 flex items-center justify-center rounded-full mb-4 bg-[#050E3C] text-white">
@@ -259,7 +283,9 @@ export default function HomePage() {
               <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2 text-center">
                 {popup.isNew ? "New Asset" : "Asset Already Exists"}
               </h3>
-              <p className="text-center text-gray-600 mb-6 text-sm sm:text-base">{popup.message}</p>
+              <p className="text-center text-gray-600 mb-6 text-sm sm:text-base">
+                {popup.message}
+              </p>
 
               {/* Buttons */}
               <div className="flex justify-center gap-4 w-full">
@@ -268,7 +294,7 @@ export default function HomePage() {
                     e.stopPropagation();
                     handlePopupConfirm();
                   }}
-                   className="flex-1 bg-[#050E3C] hover:bg-[#050E3C]/90 text-white font-medium py-2 rounded-lg transition text-sm sm:text-base"
+                  className="flex-1 bg-[#050E3C] hover:bg-[#050E3C]/90 text-white font-medium py-2 rounded-lg transition text-sm sm:text-base"
                 >
                   {popup.isNew ? "Add Asset" : "Report Fault"}
                 </button>

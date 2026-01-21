@@ -6,6 +6,7 @@ export default function LogFaultPage() {
   const navigate = useNavigate();
   const asset = location.state?.asset;
   const [images, setImages] = useState([]);
+  const [date,setDate]=useState("");
 
   const handleImageUpload = (e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -29,11 +30,11 @@ export default function LogFaultPage() {
   return (
     <>
       <div className="relative text-gray-800">
-        <div className="max-w-lg mx-auto px-2">
+        <div className="max-w-2xl mx-auto px-5">
           <button
             type="button"
             onClick={() => navigate("/location")}
-            className="flex flex-row items-center gap-2 text-[#050E3C] mb-2"
+            className="flex flex-row items-center gap-1 text-[#050E3C] mb-2 text-md font-semibold"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -56,19 +57,6 @@ export default function LogFaultPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Fault Description */}
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Fault Description <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                required
-                rows={4}
-                placeholder="Describe the fault..."
-                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-blue-200 focus:outline-none"
-              />
-            </div>
-
             {/* Fault Type */}
             <div>
               <label className="block text-sm font-medium mb-1">
@@ -82,8 +70,20 @@ export default function LogFaultPage() {
                 <option>Work</option>
                 <option>Fault</option>
                 <option>Service</option>
-                <option>Other</option>
               </select>
+            </div>
+
+            {/* Fault Details */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Fault Details <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                required
+                rows={2}
+                placeholder="Briefly Mention the Fault"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-blue-200 focus:outline-none"
+              />
             </div>
 
             {/* Priority */}
@@ -96,6 +96,19 @@ export default function LogFaultPage() {
                 <option>High</option>
                 <option>Critical</option>
               </select>
+            </div>
+
+            {/* Fault Description */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Fault Details <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                required
+                rows={4}
+                placeholder="Describe the Fault"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-blue-200 focus:outline-none"
+              />
             </div>
 
             {/* Image Upload */}
@@ -120,8 +133,48 @@ export default function LogFaultPage() {
               )}
             </div>
 
+            {/* Date Selection */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Date <span className="text-red-500">*</span>
+              </label>
+              <input
+                required
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-blue-200 focus:outline-none"
+              />
+            </div>
+
+            {/* Fault Details */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Reporter Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                required
+                type="text"
+                placeholder="S.P. Fernando"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-blue-200 focus:outline-none"
+              />
+            </div>
+
+            {/* Fault Details */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Contact Number <span className="text-red-500">*</span>
+              </label>
+              <input
+                required
+                type="text"
+                placeholder="0118965241"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-blue-200 focus:outline-none"
+              />
+            </div>
+
             {/* Submit Buttons */}
-            <div className="flex gap-3 pt-4 sm:gap-3">
+            <div className="flex gap-3 pt-4 sm:gap-5">
               <button
                 type="button"
                 onClick={() => navigate("/location")}
