@@ -2,7 +2,7 @@ import { Search } from "lucide-react";
 
 export default function AssestSearchBar() {
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full">
       <div className="relative">
         {/* Search Icon */}
         <Search

@@ -62,14 +62,17 @@ export default function LocationPage() {
             Floor - Room Name
           </p>
 
-          <div className="relative mt-5 flex flex-col gap-2">
-            {/* Search Bar */}
-            <div className="w-full sm:max-w-sm sm:absolute sm:left-1/2 sm:-translate-x-1/2">
+          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3 items-center">
+            {/* Left empty column (for balance on desktop) */}
+            <div className="hidden md:block" />
+
+            {/* Search Bar (centered) */}
+            <div className="w-full md:mx-auto">
               <AssestSearchBar />
             </div>
 
-            {/* Add New Asset Button */}
-            <div className="mt-1 flex justify-center sm:mt-0 sm:justify-end">
+            {/* Add New Asset Button (right aligned) */}
+            <div className="flex justify-center md:justify-end">
               <button
                 onClick={() => navigate("/add-asset")}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#050E3C] text-white rounded-lg hover:bg-[#050E3C]/90 transition-all font-medium shadow-md hover:shadow-lg active:scale-95"
