@@ -6,7 +6,7 @@ export default function LogFaultPage() {
   const navigate = useNavigate();
   const asset = location.state?.asset;
   const [images, setImages] = useState([]);
-  const [date,setDate]=useState("");
+  const [date, setDate] = useState("");
 
   const handleImageUpload = (e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -21,7 +21,6 @@ export default function LogFaultPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log("Fault submitted for asset:", asset);
     alert("Fault reported successfully!");
     navigate("/location");
@@ -101,7 +100,7 @@ export default function LogFaultPage() {
             {/* Fault Description */}
             <div>
               <label className="block text-sm font-medium mb-1">
-                Fault Details <span className="text-red-500">*</span>
+                Fault Description <span className="text-red-500">*</span>
               </label>
               <textarea
                 required
@@ -147,7 +146,15 @@ export default function LogFaultPage() {
               />
             </div>
 
-            {/* Fault Details */}
+            {/* Checkbox after Date */}
+            <div className="flex items-center gap-2">
+              <input type="checkbox" required className="w-4 h-4" />
+              <label className="text-sm font-semibold">
+                I am reporting this fault
+              </label>
+            </div>
+
+            {/* Reporter Name */}
             <div>
               <label className="block text-sm font-medium mb-1">
                 Reporter Name <span className="text-red-500">*</span>
@@ -160,7 +167,7 @@ export default function LogFaultPage() {
               />
             </div>
 
-            {/* Fault Details */}
+            {/* Contact Number */}
             <div>
               <label className="block text-sm font-medium mb-1">
                 Contact Number <span className="text-red-500">*</span>
@@ -171,6 +178,14 @@ export default function LogFaultPage() {
                 placeholder="0118965241"
                 className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-blue-200 focus:outline-none"
               />
+            </div>
+
+            {/* Checkbox after Contact Number */}
+            <div className="flex items-center gap-2">
+              <input type="checkbox" required className="w-4 h-4" />
+              <label className="text-sm font-semibold">
+                I verify that all information is correct
+              </label>
             </div>
 
             {/* Submit Buttons */}
