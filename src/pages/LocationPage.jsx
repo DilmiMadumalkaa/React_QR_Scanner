@@ -58,7 +58,7 @@ export default function LocationPage() {
           <h1 className="text-3xl font-bold text-gray-900 text-center">
             Building A
           </h1>
-          <p className="mt-1 text-md text-gray-500 text-center">
+          <p className="mt-1 text-md font-medium text-gray-500 text-center">
             Floor - Room Name
           </p>
 
