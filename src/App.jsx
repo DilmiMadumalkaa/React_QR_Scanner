@@ -35,7 +35,7 @@ export default function App() {
                   <Route path="/" element={<DashboardPage />} />
                   <Route path="/scan" element={<ScanPage />} />
                   <Route path="/history" element={<History />} />
-                  <Route path="/location" element={<LocationPage />} />
+                  <Route path="/location/:roomId" element={<LocationPage />} />
                   <Route path="/add-asset" element={<AddAssetPage />} />
                   <Route path="/mycomplaints" element={<MyComplaintsPage />} />
                   <Route path="/logfault" element={<LogFaultPage />} />

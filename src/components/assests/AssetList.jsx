@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function AssetList({ assets = [], onAssetClick, basePath }) {
+export default function AssetList({ assets = [], basePath }) {
   const navigate = useNavigate();
 
   const handleReportFault = (e, asset) => {
@@ -11,10 +11,6 @@ export default function AssetList({ assets = [], onAssetClick, basePath }) {
     });
   };
 
-  const handleClick = (asset) => {
-    if (onAssetClick) return onAssetClick(asset);
-    navigate(`${basePath}/${asset.id}`);
-  };
 
   return (
     <div className="w-full">
@@ -81,36 +77,27 @@ function StatusBadge({ status }) {
   if (status === "Faulty") {
     return (
       <span className={`${base} bg-red-600 text-white border-red-600`}>
-        Faulty
+        Fault
       </span>
     );
   }
   if (status === "In Progress") {
     return (
       <span className={`${base} bg-blue-950 text-white border-blue-950`}>
-        In Progress
+        Service
       </span>
     );
   }
-  if (status === "Offline") {
-    return (
-      <span
-        className={`${base} bg-yellow-50 text-yellow-800 border-yellow-200`}
-      >
-        Offline
-      </span>
-    );
-  }
+
   // Active / default
   return (
     <span className={`${base} bg-green-600 text-white border-green-600`}>
-      Active
+      Work
     </span>
   );
 }
 
 function TypeIcon({ type }) {
-  // Keep icons simple & dependency-free (SVG). Add more as needed.
   const common = "h-10 w-10 rounded-xl flex items-center justify-center";
   const label = type?.toLowerCase?.() || "";
 
@@ -200,7 +187,7 @@ function TypeIcon({ type }) {
     );
   }
 
-  // Default: generic asset icon
+  // Default: asset icon
   return (
     <div className={`${common} bg-gray-100 text-gray-700`} aria-hidden="true">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
