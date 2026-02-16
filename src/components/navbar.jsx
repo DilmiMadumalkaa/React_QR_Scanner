@@ -42,6 +42,17 @@ const Navbar = ({ logout, user }) => {
         </button>
 
         <button
+          onClick={() => navigate("/select-asset")}
+          className={`px-4 py-2 rounded-lg transition-all text-white font-medium ${
+            location.pathname === "/select-asset" 
+              ? "bg-white/20" 
+              : "hover:bg-white/10"
+          }`}
+        >
+          Select Asset
+        </button>
+
+        <button
           onClick={logout}
           className="px-4 py-2 rounded-lg transition-all text-white font-medium hover:bg-red-500/20 flex items-center gap-2"
         >
