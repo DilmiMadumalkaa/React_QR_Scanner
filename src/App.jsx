@@ -11,7 +11,6 @@ import MyComplaintsPage from "./pages/MyComplaintsPage";
 import FaultDetailsPage from "./pages/FaultDetailsPage";
 import LogFaultPage from "./pages/LogFaultPage";
 import AddAssetPage from "./pages/AddAssetPage";
-import SelectAssetPage from "./pages/SelectAssetPage";
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
@@ -37,8 +36,6 @@ export default function App() {
                   <Route path="/history" element={<History />} />
                   <Route path="/:region/:rtom/:station/:building/:floor?/:room?" element={<LocationPage />} />
                   <Route path="/add-asset" element={<AddAssetPage />} />
-                  <Route path="/select-asset" element={<SelectAssetPage />} />
-                  <Route path="/select-asset/:assetType" element={<SelectAssetPage />} />
                   <Route path="/mycomplaints" element={<MyComplaintsPage />} />
                   <Route path="/logfault" element={<LogFaultPage />} />
                   <Route path="/faults/:faultId" element={<FaultDetailsPage />} />
