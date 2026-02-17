@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import AssetList from "../components/assests/AssetList";
 import Navbar from "../components/common/navbar";
 import { useAuth } from "../services/authService";
@@ -12,6 +12,7 @@ export default function LocationPage() {
   const [assets, setAssets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   let { region, rtom, station, building, floor, room } = useParams();
 
@@ -32,6 +33,7 @@ export default function LocationPage() {
       rtom: item.rtom || null,
       station: item.station || null,
       building: item.rtom_building_id || null,
+      floor: null,
       room: item.location || null,
     }));
 
@@ -91,6 +93,25 @@ export default function LocationPage() {
     return true;
   };
 
+  // FILTERING HAPPENS HERE
+  const filteredAssets = useMemo(() => {
+    if (!searchTerm) return assets;
+
+    return assets.filter((asset) =>
+      [
+        asset.assetId,
+        asset.region,
+        asset.rtom,
+        asset.station,
+        asset.building,
+        asset.floor,
+        asset.room,
+      ].some((field) =>
+        field?.toString().toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+    );
+  }, [searchTerm, assets]);
+
   const handleSelectType = (type) => {
     setSelectedType(type);
 
@@ -148,7 +169,7 @@ export default function LocationPage() {
               <div className="hidden md:block" />
 
               <div className="w-full md:mx-auto">
-                <AssestSearchBar />
+                <AssestSearchBar onSearch={setSearchTerm} />
               </div>
             </div>
 
@@ -157,7 +178,9 @@ export default function LocationPage() {
                 <p className="text-center text-gray-500">Loading assets...</p>
               )}
 
-              {!isLoading && <AssetList assets={assets} basePath="/logfault" />}
+              {!isLoading && (
+                <AssetList assets={filteredAssets} basePath="/logfault" />
+              )}
             </div>
           </div>
         </main>

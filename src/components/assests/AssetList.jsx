@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function AssetList({ assets = [], basePath }) {
+export default function AssetList({ assets , basePath }) {
   const navigate = useNavigate();
 
   const handleReportFault = (e, asset) => {
