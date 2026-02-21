@@ -169,7 +169,7 @@ export default function AddAssetForm({ assetType, filters }) {
           />
         </div> */}
 
-        {/* Location Information - if from Location Page */}
+        {/* Location Information - if from Location Page. */}
         {filters && Object.values(filters).some(v => v) && (
           <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
             <p className="text-sm font-semibold text-blue-900 mb-3">📍 Location Information</p>
