@@ -1,9 +1,13 @@
 import React from "react";
 import AddAssetForm from "../components/assests/AddAssetForm";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function AddAssetPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const assetType = location.state?.assetType;
+  const filters = location.state?.filters;
+
   return (
     <div className="relative text-gray-800 px-4 sm:px-6 py-3">
       <div className="max-w-2xl mx-auto px-5">
@@ -30,7 +34,23 @@ export default function AddAssetPage() {
           Register a new asset to the system
         </p>
 
-        <AddAssetForm />
+        {/* Show context if coming from Location page */}
+        {assetType && filters && (
+          <div className="mb-6 p-4 bg-blue-50 border-l-4 border-[#050E3C] rounded">
+            <p className="text-sm text-blue-900 font-semibold">
+              📍 Adding new <span className="text-[#050E3C]">{assetType === 'ac' ? 'Precision AC' : 'Light Panel'}</span> asset for:
+            </p>
+            <p className="text-xs text-blue-800 mt-2">
+              {filters.region && `Region: ${filters.region} • `}
+              {filters.station && `Station: ${filters.station} • `}
+              {filters.building && `Building: ${filters.building} • `}
+              {filters.floor && `Floor: ${filters.floor} • `}
+              {filters.room && `Room: ${filters.room}`}
+            </p>
+          </div>
+        )}
+
+        <AddAssetForm assetType={assetType} filters={filters} />
       </div>
     </div>
   );
