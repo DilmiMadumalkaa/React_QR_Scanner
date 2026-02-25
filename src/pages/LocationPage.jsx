@@ -37,6 +37,22 @@ export default function LocationPage() {
       room: item.location || null,
     }));
 
+  const mapLightAssets = (data) =>
+    data.map((item) => ({
+      id: item.PanelSerial,
+      name: "Light Panel",
+      type: "light",
+      assetId: item.PanelSerial,
+      status: normalizeStatus(item.STATUS),
+
+      region: item.Region || null,
+      rtom: item.RTOM || null,
+      station: item.Station || null,
+      building: item.Building || null,
+      floor: null,
+      room: item.Room || null,
+    }));
+
   const normalizeStatus = (status) => {
     if (!status) return "Active";
     const s = status.toLowerCase();
@@ -57,6 +73,7 @@ export default function LocationPage() {
         );
         const data = await res.json();
         allAssets = mapACAssets(data);
+        console.log(allAssets);
       }
 
       if (type === "light") {
@@ -65,6 +82,7 @@ export default function LocationPage() {
         );
         const data = await res.json();
         allAssets = mapLightAssets(data);
+        console.log(allAssets)
       }
 
       const filteredAssets = allAssets.filter((asset) =>
@@ -72,6 +90,7 @@ export default function LocationPage() {
       );
 
       setAssets(filteredAssets);
+      console.log(filteredAssets);
     } catch (error) {
       console.error("Failed to fetch assets:", error);
     } finally {
@@ -79,19 +98,20 @@ export default function LocationPage() {
     }
   };
 
-  const matchesLocation = (asset, location) => {
-    for (let key in location) {
-      const urlValue = location[key];
+  const normalize = (value) =>
+  value?.toString().trim().toLowerCase();
 
-      if (!urlValue) continue;
+const matchesLocation = (asset, location) => {
+  for (let key in location) {
+    const urlValue = location[key];
+    if (!urlValue) continue;
 
-      if (asset[key] !== urlValue) {
-        return false;
-      }
+    if (normalize(asset[key]) !== normalize(urlValue)) {
+      return false;
     }
-
-    return true;
-  };
+  }
+  return true;
+};
 
   // FILTERING HAPPENS HERE
   const filteredAssets = useMemo(() => {
@@ -159,7 +179,7 @@ export default function LocationPage() {
             </button>
 
             <h1 className="text-3xl font-bold text-gray-900 text-center">
-              Building A
+              {building}
             </h1>
             <p className="mt-1 text-md font-medium text-gray-500 text-center">
               {room}
