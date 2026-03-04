@@ -9,8 +9,8 @@ export default function LogFaultPage() {
 
   return (
     <>
-      <div className="relative text-gray-800 px-4 sm:px-6 py-3">
-        <div className="max-w-2xl mx-auto px-5">
+      <div className="relative text-gray-800 sm:px-6 py-3">
+        <div className="max-w-2xl mx-auto px-2">
           <button
             type="button"
             onClick={() => navigate("/location")}
@@ -29,15 +29,9 @@ export default function LogFaultPage() {
           </button>
 
           <h1 className="text-3xl text-center font-bold mb-2">Report Fault</h1>
-          {asset && (
-            <p className="text-center text-gray-600 mb-6">
-              Asset: <span className="font-semibold">{asset.name}</span> (
-              {asset.assetId})
-            </p>
-          )}
 
           {/* Report Fault Form */}
-          <FaultForm />
+          <FaultForm asset={asset} />
         </div>
       </div>
     </>

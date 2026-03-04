@@ -53,6 +53,34 @@ export default function LocationPage() {
       room: item.Room || null,
     }));
 
+  const mapPACAssets = (data) => {
+    if (!Array.isArray(data)) return [];
+    return data
+      .filter((item) => item && item.precisionAC_ID)
+      .map((item) => ({
+        id: item.Serial_Number,
+        name: "Precision A/C",
+        type: "pac",
+        assetId: item.Serial_Number,
+        status: normalizeStatus(item.STATUS),
+
+        region: item.Region ? String(item.Region).trim() : null,
+        rtom: item.RTOM ? String(item.RTOM).trim() : null,
+        station: item.Station ? String(item.Station).trim() : null,
+        building: item.building_id ? String(item.building_id).trim() : null,
+        floor: item.floor_number ? String(item.floor_number).trim() : null,
+        room: item.Location,
+
+        qrTag: item.QRTag,
+        model: item.Model || "Precision AC Unit",
+        serialNumber: item.Serial_Number,
+        manufacturer: item.Manufacturer,
+        coolingCapacity: item.Cooling_Capacity,
+        installationDate: item.Installation_Date,
+        powerSupply: item.Power_Supply,
+      }));
+  };
+
   const normalizeStatus = (status) => {
     if (!status) return "Active";
     const s = status.toLowerCase();
@@ -73,7 +101,6 @@ export default function LocationPage() {
         );
         const data = await res.json();
         allAssets = mapACAssets(data);
-        console.log(allAssets);
       }
 
       if (type === "light") {
@@ -82,7 +109,14 @@ export default function LocationPage() {
         );
         const data = await res.json();
         allAssets = mapLightAssets(data);
-        console.log(allAssets)
+      }
+
+      if (type === "pac") {
+        const res = await fetch(
+          "https://powerprox.sltidc.lk/GET_PrecisionAC.php",
+        );
+        const data = await res.json();
+        allAssets = mapPACAssets(data);
       }
 
       const filteredAssets = allAssets.filter((asset) =>
@@ -90,7 +124,6 @@ export default function LocationPage() {
       );
 
       setAssets(filteredAssets);
-      console.log(filteredAssets);
     } catch (error) {
       console.error("Failed to fetch assets:", error);
     } finally {
@@ -98,20 +131,19 @@ export default function LocationPage() {
     }
   };
 
-  const normalize = (value) =>
-  value?.toString().trim().toLowerCase();
+  const normalize = (value) => value?.toString().trim().toLowerCase();
 
-const matchesLocation = (asset, location) => {
-  for (let key in location) {
-    const urlValue = location[key];
-    if (!urlValue) continue;
+  const matchesLocation = (asset, location) => {
+    for (let key in location) {
+      const urlValue = location[key];
+      if (!urlValue) continue;
 
-    if (normalize(asset[key]) !== normalize(urlValue)) {
-      return false;
+      if (normalize(asset[key]) !== normalize(urlValue)) {
+        return false;
+      }
     }
-  }
-  return true;
-};
+    return true;
+  };
 
   // FILTERING HAPPENS HERE
   const filteredAssets = useMemo(() => {
@@ -148,20 +180,57 @@ const matchesLocation = (asset, location) => {
             <h2 className="text-md sm:text-lg text-gray-600 font-semibold mb-8">
               Please select your Asset Type
             </h2>
-
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3">
               <button
                 onClick={() => handleSelectType("ac")}
-                className="py-4 bg-blue-900 text-white sm:text-lg rounded-xl  hover:bg-blue-700 transition"
+                className="flex flex-col items-center gap-1 px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-300 text-blue-800 hover:shadow-md hover:shadow-blue-100"
               >
-                A/C
+                <span className="text-4xl">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="30px"
+                    viewBox="0 -960 960 960"
+                    width="35px"
+                    fill="#2c5282"
+                  >
+                    <path d="M240-280h480v-120H240v120Zm-80 120q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z" />
+                  </svg>
+                </span>
+                <span>A/C</span>
               </button>
-
               <button
                 onClick={() => handleSelectType("light")}
-                className="py-4 bg-yellow-800 text-white sm:text-lg rounded-xl  hover:bg-yellow-600 transition"
+                className="flex flex-col items-center gap-1 px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 bg-gradient-to-br from-yellow-50 to-yellow-100 border-2 border-yellow-300 text-yellow-800 hover:shadow-md hover:shadow-yellow-100"
               >
-                Light Panels
+                <span className="text-4xl">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="30px"
+                    viewBox="0 -960 960 960"
+                    width="35px"
+                    fill="#854D0E"
+                  >
+                    <path d="M423.5-103.5Q400-127 400-160h160q0 33-23.5 56.5T480-80q-33 0-56.5-23.5ZM320-200v-80h320v80H320Zm10-120q-69-41-109.5-110T180-580q0-125 87.5-212.5T480-880q125 0 212.5 87.5T780-580q0 81-40.5 150T630-320H330Zm24-80h252q45-32 69.5-79T700-580q0-92-64-156t-156-64q-92 0-156 64t-64 156q0 54 24.5 101t69.5 79Zm126 0Z" />
+                  </svg>
+                </span>
+                <span>Light Panel</span>
+              </button>
+              <button
+                onClick={() => handleSelectType("pac")}
+                className="flex flex-col items-center gap-1 px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-300 text-green-800 hover:shadow-md hover:shadow-green-100"
+              >
+                <span className="text-4xl">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="30px"
+                    viewBox="0 -960 960 960"
+                    width="30px"
+                    fill="#276749"
+                  >
+                    <path d="M440-80v-166L310-118l-56-56 186-186v-80h-80L174-254l-56-56 128-130H80v-80h166L118-650l56-56 186 186h80v-80L254-786l56-56 130 128v-166h80v166l130-128 56 56-186 186v80h80l186-186 56 56-128 130h166v80H714l128 130-56 56-186-186h-80v80l186 186-56 56-130-128v166h-80Z" />
+                  </svg>
+                </span>
+                <span>Precision A/C</span>
               </button>
             </div>
           </div>

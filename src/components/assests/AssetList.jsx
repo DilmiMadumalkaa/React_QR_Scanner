@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function AssetList({ assets , basePath }) {
+export default function AssetList({ assets, basePath }) {
   const navigate = useNavigate();
 
   const handleReportFault = (e, asset) => {
@@ -10,7 +10,6 @@ export default function AssetList({ assets , basePath }) {
       state: { asset },
     });
   };
-
 
   return (
     <div className="w-full">
@@ -83,7 +82,7 @@ function StatusBadge({ status }) {
   }
   if (status === "In Progress") {
     return (
-      <span className={`${base} bg-blue-950 text-white border-blue-950`}>
+      <span className={`${base} bg-blue-600 text-white border-blue-600`}>
         Service
       </span>
     );
