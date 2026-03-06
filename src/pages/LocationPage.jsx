@@ -35,6 +35,8 @@ export default function LocationPage() {
       building: item.rtom_building_id || null,
       floor: null,
       room: item.location || null,
+
+      qrTag:item.QR_loc,
     }));
 
   const mapLightAssets = (data) =>
@@ -51,6 +53,9 @@ export default function LocationPage() {
       building: item.Building || null,
       floor: null,
       room: item.Room || null,
+
+      qrTag: item.QRtag,
+      model: item.PanelType,
     }));
 
   const mapPACAssets = (data) => {
@@ -171,7 +176,7 @@ export default function LocationPage() {
   };
 
   return (
-    <div className="relative text-gray-800 mb-3">
+    <div className="relative text-gray-800 mb-3 mx-3">
       <Navbar logout={logout} user={user} />
 
       {!selectedType && (

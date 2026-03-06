@@ -13,7 +13,7 @@ export default function LogFaultPage() {
         <div className="max-w-2xl mx-auto px-2">
           <button
             type="button"
-            onClick={() => navigate("/location")}
+            onClick={() => navigate(-1)}
             className="flex flex-row items-center gap-1 text-[#050E3C] mb-2 text-md font-semibold"
           >
             <svg
