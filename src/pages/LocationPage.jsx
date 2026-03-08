@@ -36,7 +36,7 @@ export default function LocationPage() {
       floor: null,
       room: item.location || null,
 
-      qrTag:item.QR_loc,
+      qrTag: item.QR_loc,
     }));
 
   const mapLightAssets = (data) =>
@@ -55,7 +55,8 @@ export default function LocationPage() {
       room: item.Room || null,
 
       qrTag: item.QRtag,
-      model: item.PanelType,
+      model: item.BreakerModel,
+      brand: item.BreakerBrand,
     }));
 
   const mapPACAssets = (data) => {
@@ -65,7 +66,7 @@ export default function LocationPage() {
       .map((item) => ({
         id: item.Serial_Number,
         name: "Precision A/C",
-        type: "pac",
+        type: "precisionAC",
         assetId: item.Serial_Number,
         status: normalizeStatus(item.STATUS),
 
@@ -116,7 +117,7 @@ export default function LocationPage() {
         allAssets = mapLightAssets(data);
       }
 
-      if (type === "pac") {
+      if (type === "precisionAC") {
         const res = await fetch(
           "https://powerprox.sltidc.lk/GET_PrecisionAC.php",
         );
@@ -187,6 +188,23 @@ export default function LocationPage() {
             </h2>
             <div className="flex flex-col gap-3">
               <button
+                onClick={() => handleSelectType("precisionAC")}
+                className="flex flex-col items-center gap-1 px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-300 text-green-800 hover:shadow-md hover:shadow-green-100"
+              >
+                <span className="text-4xl">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="30px"
+                    viewBox="0 -960 960 960"
+                    width="30px"
+                    fill="#276749"
+                  >
+                    <path d="M440-80v-166L310-118l-56-56 186-186v-80h-80L174-254l-56-56 128-130H80v-80h166L118-650l56-56 186 186h80v-80L254-786l56-56 130 128v-166h80v166l130-128 56 56-186 186v80h80l186-186 56 56-128 130h166v80H714l128 130-56 56-186-186h-80v80l186 186-56 56-130-128v166h-80Z" />
+                  </svg>
+                </span>
+                <span>Precision A/C</span>
+              </button>
+              <button
                 onClick={() => handleSelectType("ac")}
                 className="flex flex-col items-center gap-1 px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-300 text-blue-800 hover:shadow-md hover:shadow-blue-100"
               >
@@ -219,23 +237,6 @@ export default function LocationPage() {
                   </svg>
                 </span>
                 <span>Light Panel</span>
-              </button>
-              <button
-                onClick={() => handleSelectType("pac")}
-                className="flex flex-col items-center gap-1 px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-300 text-green-800 hover:shadow-md hover:shadow-green-100"
-              >
-                <span className="text-4xl">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="30px"
-                    viewBox="0 -960 960 960"
-                    width="30px"
-                    fill="#276749"
-                  >
-                    <path d="M440-80v-166L310-118l-56-56 186-186v-80h-80L174-254l-56-56 128-130H80v-80h166L118-650l56-56 186 186h80v-80L254-786l56-56 130 128v-166h80v166l130-128 56 56-186 186v80h80l186-186 56 56-128 130h166v80H714l128 130-56 56-186-186h-80v80l186 186-56 56-130-128v166h-80Z" />
-                  </svg>
-                </span>
-                <span>Precision A/C</span>
               </button>
             </div>
           </div>
