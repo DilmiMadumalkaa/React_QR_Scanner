@@ -14,7 +14,7 @@ function StatusBadge({ status }) {
 
   if (status === "In Progress") {
     return (
-      <span className={`${base} bg-blue-950 text-white border-blue-950`}>
+      <span className={`${base} bg-yellow-600 text-white border-yellow-600`}>
         In Progress
       </span>
     );

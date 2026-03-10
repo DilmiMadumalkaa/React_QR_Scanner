@@ -35,7 +35,7 @@ export default function App() {
                   <Route path="/scan" element={<ScanPage />} />
                   <Route path="/location" element={<LocationPage />} />
                   <Route path="/history" element={<History />} />
-                  <Route path="/:region/:rtom/:station/:building/:floor?/:room?" element={<LocationPage />} />
+                  <Route path="/:region?/:rtom?/:station?/:building?/:floor?/:room?" element={<LocationPage />} />
                   <Route path="/add-asset" element={<AddAssetPage />} />
                   <Route path="/mycomplaints" element={<MyComplaintsPage />} />
                   <Route path="/logfault" element={<LogFaultPage />} />
