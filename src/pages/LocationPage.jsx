@@ -24,8 +24,8 @@ export default function LocationPage() {
   const mapACAssets = (data) =>
     data.map((item) => ({
       id: item.floor_number,
-      name: "A/C",
-      type: "ac",
+      name: "Comfort A/C",
+      type: "Comfort AC",
       assetId: item.floor_number,
       status: normalizeStatus(item.STATUS),
 
@@ -43,7 +43,7 @@ export default function LocationPage() {
     data.map((item) => ({
       id: item.PanelSerial,
       name: "Light Panel",
-      type: "light",
+      type: "Light",
       assetId: item.PanelSerial,
       status: normalizeStatus(item.STATUS),
 
@@ -66,7 +66,7 @@ export default function LocationPage() {
       .map((item) => ({
         id: item.Serial_Number,
         name: "Precision A/C",
-        type: "precisionAC",
+        type: "Precision AC",
         assetId: item.Serial_Number,
         status: normalizeStatus(item.STATUS),
 
@@ -101,7 +101,7 @@ export default function LocationPage() {
     try {
       let allAssets = [];
 
-      if (type === "ac") {
+      if (type === "Comfort AC") {
         const res = await fetch(
           "https://powerprox.sltidc.lk/GET_AC_Connection.php",
         );
@@ -109,7 +109,7 @@ export default function LocationPage() {
         allAssets = mapACAssets(data);
       }
 
-      if (type === "light") {
+      if (type === "Light") {
         const res = await fetch(
           "https://powerprox.sltidc.lk/GET_LV_Panel_ACPDB.php",
         );
@@ -117,7 +117,7 @@ export default function LocationPage() {
         allAssets = mapLightAssets(data);
       }
 
-      if (type === "precisionAC") {
+      if (type === "Precision AC") {
         const res = await fetch(
           "https://powerprox.sltidc.lk/GET_PrecisionAC.php",
         );
@@ -188,7 +188,7 @@ export default function LocationPage() {
             </h2>
             <div className="flex flex-col gap-3">
               <button
-                onClick={() => handleSelectType("precisionAC")}
+                onClick={() => handleSelectType("Precision AC")}
                 className="flex flex-col items-center gap-1 px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-300 text-green-800 hover:shadow-md hover:shadow-green-100"
               >
                 <span className="text-4xl">
@@ -205,7 +205,7 @@ export default function LocationPage() {
                 <span>Precision A/C</span>
               </button>
               <button
-                onClick={() => handleSelectType("ac")}
+                onClick={() => handleSelectType("Comfort AC")}
                 className="flex flex-col items-center gap-1 px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-300 text-blue-800 hover:shadow-md hover:shadow-blue-100"
               >
                 <span className="text-4xl">
@@ -219,10 +219,10 @@ export default function LocationPage() {
                     <path d="M240-280h480v-120H240v120Zm-80 120q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z" />
                   </svg>
                 </span>
-                <span>A/C</span>
+                <span>Comfort A/C</span>
               </button>
               <button
-                onClick={() => handleSelectType("light")}
+                onClick={() => handleSelectType("Light")}
                 className="flex flex-col items-center gap-1 px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 bg-gradient-to-br from-yellow-50 to-yellow-100 border-2 border-yellow-300 text-yellow-800 hover:shadow-md hover:shadow-yellow-100"
               >
                 <span className="text-4xl">

@@ -12,6 +12,10 @@ export default function FaultForm({ asset }) {
   const [reporterName, setReporterName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [verified, setVerified] = useState(false);
+  const [manualRegion, setManualRegion] = useState("");
+  const [manualBuilding, setManualBuilding] = useState("");
+  const [manualRoom, setManualRoom] = useState("");
+  const [manualFloor, setManualFloor] = useState("");
 
 
   const handleImageUpload = (e) => {
@@ -34,13 +38,13 @@ export default function FaultForm({ asset }) {
       formData.append("assetId", asset?.assetId);
       formData.append("assetType", asset?.type);
 
-      // Location information
-      formData.append("region", asset?.region);
+      // Location information - use manual fields if asset not found
+      formData.append("region", asset?.region || manualRegion);
       formData.append("rtom", asset?.rtom);
       formData.append("station", asset?.station);
-      formData.append("building", asset?.building);
-      formData.append("floor", asset?.floor);
-      formData.append("room", asset?.room);
+      formData.append("building", asset?.building || manualBuilding);
+      formData.append("floor", asset?.floor || manualFloor);
+      formData.append("room", asset?.room || manualRoom);
       formData.append("model", asset?.model);
       formData.append("brand", asset?.brand);
 
@@ -87,11 +91,11 @@ export default function FaultForm({ asset }) {
 
   // Determine asset type display
   const assetTypeDisplay =
-    asset?.type === "ac"
-      ? "AC"
-      : asset?.type === "light"
+    asset?.type === "Comfort AC"
+      ? "Comfort AC"
+      : asset?.type === "Light"
         ? "Light Panel"
-        : asset.type === "pac"
+        : asset?.type === "Precision AC"
           ? "Precision AC"
           : "Not Found";
   const assetIdDisplay = asset?.id || "Not Found";
@@ -127,6 +131,71 @@ export default function FaultForm({ asset }) {
             className="w-full rounded-lg border border-gray-300 bg-gray-100 p-3 text-gray-700 font-medium"
           />
         </div>
+
+        {/* Manual Location Fields - Only show if asset is NOT found */}
+        {!asset && (
+          <>
+            {/* Region */}
+            <div>
+              <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+                Region
+              </label>
+              <input
+                type="text"
+                required
+                value={manualRegion}
+                onChange={(e) => setManualRegion(e.target.value)}
+                placeholder="Enter region"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+              />
+            </div>
+
+            {/* Building */}
+            <div>
+              <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+                Building
+              </label>
+              <input
+                type="text"
+                required
+                value={manualBuilding}
+                onChange={(e) => setManualBuilding(e.target.value)}
+                placeholder="Enter building"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+              />
+            </div>
+
+            {/* Room */}
+            <div>
+              <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+                Room
+              </label>
+              <input
+                type="text"
+                required
+                value={manualRoom}
+                onChange={(e) => setManualRoom(e.target.value)}
+                placeholder="Enter room"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+              />
+            </div>
+
+            {/* Floor */}
+            <div>
+              <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+                Floor
+              </label>
+              <input
+                type="text"
+                required
+                value={manualFloor}
+                onChange={(e) => setManualFloor(e.target.value)}
+                placeholder="Enter floor"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+              />
+            </div>
+          </>
+        )}
 
         {/* Fault Type - Button Style */}
         <div>
@@ -270,7 +339,7 @@ export default function FaultForm({ asset }) {
 
           <input
             required
-            type="datetime-local"
+            type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
