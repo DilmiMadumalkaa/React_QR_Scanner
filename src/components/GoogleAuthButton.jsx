@@ -1,12 +1,13 @@
 import { useAuth } from "../services/authService";
 
 export default function GoogleAuthButton() {
-  const { loginWithGoogle } = useAuth();
+  const { loginWithGoogle, isSigningIn } = useAuth();
 
   return (
     <button 
-      className="w-full flex items-center gap-3 py-3 px-5 bg-white border-none rounded-xl cursor-pointer text-base font-semibold text-gray-700 transition-all duration-200 ease-in-out backdrop-blur-lg hover:scale-105"
+      className="w-full flex items-center gap-3 py-3 px-5 bg-white border-none rounded-xl cursor-pointer text-base font-semibold text-gray-700 transition-all duration-200 ease-in-out backdrop-blur-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
       onClick={loginWithGoogle}
+      disabled={isSigningIn}
     >
       <div>
         <img

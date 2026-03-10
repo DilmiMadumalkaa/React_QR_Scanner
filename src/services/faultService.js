@@ -1,98 +1,125 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:8080"; // adjust if needed
+const API_URL = "https://powerprox.sltidc.lk/GETFaultReg.php";
 
-// export const getUserFaults = async (userId) => {
-//   const response = await axios.get(`${API_BASE}/faults/user/${userId}`);
-//   return response.data;
-// };
-
-// export const getFaultById = async (faultId) => {
-//   const response = await axios.get(`${API_BASE}/faults/${faultId}`);
-//   return response.data;
-// };
-
-
-export const getUserFaults = async (userId) => {
-  return [
-    {
-      id: 1,
-      assetType: "Water System",
-      assetId: "WS-001",
-      locationName: "Floor 3, Room 301",
-      description: "Water leakage detected in the corner of the room. Water is dripping from the ceiling affecting the equipment and furniture. Immediate action required to prevent further damage.",
-      status: "PENDING",
-      reportedDate: "2024-12-20T08:00:00Z"
-    },
-    {
-      id: 2,
-      assetType: "Electrical Panel",
-      assetId: "EP-045",
-      locationName: "Main Hall",
-      description: "Power outage in the entire Block C. All lights and equipment are non-functional. This is affecting the main operations and staff productivity.",
-      status: "IN_PROGRESS",
-      reportedDate: "2024-12-21T09:30:00Z"
-    },
-    {
-      id: 3,
-      assetType: "Air Conditioning Unit",
-      assetId: "AC-023",
-      locationName: "Office 205",
-      description: "AC unit is not functioning properly. The room temperature is rising and cooling has completely stopped. Maintenance required urgently.",
-      status: "RESOLVED",
-      reportedDate: "2024-12-19T10:15:00Z"
-    }
-  ];
+// Map API fault status to component status format
+const mapFaultStatus = (apiStatus) => {
+  if (!apiStatus) return "PENDING";
+  const statusMap = {
+    "New": "PENDING",
+    "Submitted": "IN_PROGRESS",
+    "Completed": "COMPLETED",
+    "Resolved": "COMPLETED",
+    "Closed": "COMPLETED"
+  };
+  return statusMap[apiStatus] || "PENDING";
 };
 
-export const getFaultById = async (faultId) => {
-  const faults = {
-    1: {
-      id: 1,
-      assetType: "Water System",
-      assetId: "WS-001",
-      locationName: "Floor 3, Room 301",
-      description: "Water leakage detected in the corner of the room. Water is dripping from the ceiling affecting the equipment and furniture. Immediate action required to prevent further damage to the building infrastructure and equipment.",
-      status: "PENDING",
-      reportedDate: "2024-12-20T08:00:00Z",
-      images: ["https://via.placeholder.com/300"],
-      history: [
-        { status: "PENDING", date: "2024-12-20T08:00:00Z" }
-      ],
-      technicianComment: null
-    },
-    2: {
-      id: 2,
-      assetType: "Electrical Panel",
-      assetId: "EP-045",
-      locationName: "Main Hall",
-      description: "Power outage in the entire Block C. All lights and equipment are non-functional. This is affecting the main operations and staff productivity. Generator might need inspection.",
-      status: "IN_PROGRESS",
-      reportedDate: "2024-12-21T09:30:00Z",
-      images: ["https://via.placeholder.com/300"],
-      history: [
-        { status: "PENDING", date: "2024-12-21T09:30:00Z" },
-        { status: "IN_PROGRESS", date: "2024-12-21T11:00:00Z" }
-      ],
-      technicianComment: "Generator is being inspected. Will update soon."
-    },
-    3: {
-      id: 3,
-      assetType: "Air Conditioning Unit",
-      assetId: "AC-023",
-      locationName: "Office 205",
-      description: "AC unit is not functioning properly. The room temperature is rising and cooling has completely stopped. Maintenance required urgently to restore comfort levels.",
-      status: "RESOLVED",
-      reportedDate: "2024-12-19T10:15:00Z",
-      images: ["https://via.placeholder.com/300"],
-      history: [
-        { status: "PENDING", date: "2024-12-19T10:15:00Z" },
-        { status: "IN_PROGRESS", date: "2024-12-19T14:00:00Z" },
-        { status: "RESOLVED", date: "2024-12-20T11:00:00Z" }
-      ],
-      technicianComment: "AC unit replaced. System is now working fine."
-    }
+// Map priority to status for display
+const mapPriorityToStatus = (priority) => {
+  if (!priority) return "PENDING";
+  const priorityMap = {
+    "Critical": "PENDING",
+    "High": "IN_PROGRESS",
+    "Moderate": "IN_PROGRESS",
+    "Non-Critical": "COMPLETED"
   };
+  return priorityMap[priority] || "PENDING";
+};
 
-  return faults[faultId] || faults[1];
+// Transform API fault data to component format
+const transformFaultData = (apiFault) => {
+  // Build location name from available fields
+  let locationName = "Unknown Location";
+  const locationParts = [];
+  if (apiFault.region) locationParts.push(apiFault.region);
+  if (apiFault.building) locationParts.push(apiFault.building);
+  if (apiFault.floor) locationParts.push(`Floor ${apiFault.floor}`);
+  if (apiFault.room) locationParts.push(`Room ${apiFault.room}`);
+  if (locationParts.length > 0) {
+    locationName = locationParts.join(", ");
+  }
+
+  // Determine status with priority
+  const status = apiFault.faultStatus 
+    ? mapFaultStatus(apiFault.faultStatus) 
+    : mapPriorityToStatus(apiFault.priority);
+
+  return {
+    id: apiFault.FaultRegID,
+    assetType: apiFault.assetType || "Unknown",
+    assetId: apiFault.faultId || "N/A",
+    locationName: locationName,
+    description: apiFault.faultDescription || apiFault.faultDetail || "No description provided",
+    status: status,
+    reportedDate: apiFault.faultOccurredDate || apiFault.uploadedTime,
+    priority: apiFault.priority || "Moderate",
+    contactNumber: apiFault.contactNumber || "",
+    detailsVerified: apiFault.detailsVerified === "true",
+    brand: apiFault.brand || "",
+    model: apiFault.model || "",
+    faultType: apiFault.faultType || "",
+    updatedBy: apiFault.updatedBy || "",
+    uploadedTime: apiFault.uploadedTime,
+    // Additional fields for detailed view
+    region: apiFault.region || "",
+    building: apiFault.building || "",
+    floor: apiFault.floor || "",
+    room: apiFault.room || "",
+    faultDetail: apiFault.faultDetail || "",
+    faultStatus: apiFault.faultStatus || "",
+    uuid: apiFault.UUID || ""
+  };
+};
+
+// Fetch all faults from API
+export const getAllFaults = async () => {
+  try {
+    const response = await axios.get(API_URL);
+    if (Array.isArray(response.data)) {
+      return response.data
+        .filter(fault => fault.FaultRegID && fault.assetType) // Filter valid entries
+        .map(transformFaultData)
+        .sort((a, b) => new Date(b.reportedDate) - new Date(a.reportedDate));
+    }
+    return [];
+  } catch (error) {
+    console.error("Error fetching faults from API:", error);
+    return [];
+  }
+};
+
+// Fetch user faults (for now returns all faults)
+export const getUserFaults = async (userId) => {
+  try {
+    const allFaults = await getAllFaults();
+    // Filter by UUID if needed, otherwise return all
+    return allFaults;
+  } catch (error) {
+    console.error("Error fetching user faults:", error);
+    return [];
+  }
+};
+
+// Fetch fault by ID
+export const getFaultById = async (faultId) => {
+  try {
+    const allFaults = await getAllFaults();
+    const fault = allFaults.find(f => f.id === String(faultId));
+    
+    if (fault) {
+      return {
+        ...fault,
+        images: [], // API doesn't provide images yet
+        history: [
+          { status: fault.status, date: fault.reportedDate }
+        ],
+        technicianComment: fault.updatedBy ? `Last updated by: ${fault.updatedBy}` : null
+      };
+    }
+    return null;
+  } catch (error) {
+    console.error("Error fetching fault by ID:", error);
+    return null;
+  }
 };

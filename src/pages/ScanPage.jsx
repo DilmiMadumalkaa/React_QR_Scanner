@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Html5Qrcode } from "html5-qrcode";
-import api from "../services/apiService";
 
 export default function ScanPage() {
   const navigate = useNavigate();
@@ -20,6 +19,35 @@ export default function ScanPage() {
       }
     };
   }, []);
+
+  const parseQRCode = (qrCodeText) => {
+    // Expected format: REGION/STATION/BUILDING/FLOOR/ROOM
+    // Example: HQ/HQ/OTS Building B/8/VPN Server Room
+    console.log("Parsing QR Code:", qrCodeText);
+
+    try {
+      // Remove any whitespace and split by "/"
+      const parts = qrCodeText.trim().split("/");
+
+      if (parts.length < 2) {
+        throw new Error("Invalid QR code format");
+      }
+
+      const locationParams = {
+        region: parts[0] || undefined,
+        station: parts[1] || undefined, // RTOM/Station
+        building: parts[2] || undefined,
+        floor: parts[3] || undefined,
+        room: parts[4] || undefined,
+      };
+
+      console.log("Parsed location params:", locationParams);
+      return locationParams;
+    } catch (error) {
+      console.error("Error parsing QR code:", error);
+      return null;
+    }
+  };
 
   const handleStartCamera = async () => {
     try {
@@ -48,30 +76,32 @@ export default function ScanPage() {
             setIsCameraActive(false);
           }
 
-          // Validate QR code with backend
-          try {
-            const response = await api.post("/locations/validate-qr", {
-              qrCode: decodedText,
-            });
+          // Parse QR code directly
+          const locationParams = parseQRCode(decodedText);
 
-            // If QR code is registered, navigate to location page
-            if (response.data.isValid && response.data.location) {
-              navigate("/location", {
-                state: {
-                  locationId: response.data.location.id,
-                  locationData: response.data.location,
-                },
-              });
-            } else {
-              // QR code not registered
-              setErrorMessage("QR code is not registered in the system");
+          if (locationParams && locationParams.region && locationParams.station) {
+            try {
+              // Build the URL with the extracted parameters
+              // Route pattern: /:region/:rtom/:station/:building/:floor?/:room?
+              const region = locationParams.region || "HQ";
+              const rtom = locationParams.station || "HQ"; // Using station as rtom for now
+              const station = locationParams.station || "HQ";
+              const building = locationParams.building || "Unknown";
+              const floor = locationParams.floor || "1";
+              const room = locationParams.room || "General";
+              
+              const url = `/${region}/${rtom}/${station}/${building}/${floor}/${room}`;
+              console.log("Navigating to:", url);
+
+              navigate(url);
+            } catch (err) {
+              console.error("Navigation error:", err);
+              setErrorMessage("Failed to navigate to location page");
               setShowErrorModal(true);
             }
-          } catch (err) {
-            console.error("Failed to validate QR code:", err);
+          } else {
             setErrorMessage(
-              err.response?.data?.message ||
-                "This QR code is not registered in the system"
+              "Invalid QR code format. Expected: REGION/STATION/BUILDING/FLOOR/ROOM"
             );
             setShowErrorModal(true);
           }
@@ -109,14 +139,6 @@ export default function ScanPage() {
           Position your QR code within the camera frame
         </p>
       </header>
-
-      {/* Sidebar */}
-      {/* <Sidebar 
-        user={user} 
-        logout={logout} 
-        isOpen={isSidebarOpen} 
-        setIsOpen={setIsSidebarOpen} 
-      /> */}
 
       <div className="flex justify-center mb-6">
         {!isCameraActive ? (
@@ -224,7 +246,7 @@ export default function ScanPage() {
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900">
-                QR Code Not Found
+                QR Code Error
               </h3>
             </div>
             <p className="text-gray-600 mb-6 text-base">{errorMessage}</p>
