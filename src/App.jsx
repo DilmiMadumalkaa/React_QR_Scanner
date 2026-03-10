@@ -12,7 +12,6 @@ import FaultDetailsPage from "./pages/FaultDetailsPage";
 import LogFaultPage from "./pages/LogFaultPage";
 import AddAssetPage from "./pages/AddAssetPage";
 
-
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <div className="p-4">Loading...</div>;
@@ -34,8 +33,9 @@ export default function App() {
                 <Routes>
                   <Route path="/" element={<DashboardPage />} />
                   <Route path="/scan" element={<ScanPage />} />
-                  <Route path="/history" element={<History />} />
                   <Route path="/location" element={<LocationPage />} />
+                  <Route path="/history" element={<History />} />
+                  <Route path="/:region/:rtom/:station/:building/:floor?/:room?" element={<LocationPage />} />
                   <Route path="/add-asset" element={<AddAssetPage />} />
                   <Route path="/mycomplaints" element={<MyComplaintsPage />} />
                   <Route path="/logfault" element={<LogFaultPage />} />

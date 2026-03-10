@@ -11,34 +11,41 @@ const FaultDetailsPage = () => {
   const { user, logout } = useAuth();
   const [fault, setFault] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchFault = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        let data = await getFaultById(faultId);
-
-        // ✅ Force third fault to COMPLETED for testing (green)
-        if (data && Number(faultId) === 3) {
-          data.status = "COMPLETED";
+        const data = await getFaultById(faultId);
+        
+        if (!data) {
+          setError("Fault not found");
+          setFault(null);
+        } else {
+          // Ensure status is uppercase
+          if (data.status) {
+            data.status = data.status.toUpperCase();
+          }
+          setFault(data);
         }
-
-        if (data && data.status) {
-          data.status = data.status.toUpperCase();
-        }
-
-        setFault(data);
       } catch (error) {
         console.error("Error fetching fault details:", error);
+        setError("Failed to load fault details");
+        setFault(null);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchFault();
+    if (faultId) {
+      fetchFault();
+    }
   }, [faultId]);
 
-  /* ---------------- Loading State ---------------- */
-  if (loading)
+  /* Loading State */
+  if (loading) {
     return (
       <div className="min-h-screen bg-white relative text-gray-800">
         <div className="absolute inset-0 bg-gray-50/50"></div>
@@ -54,9 +61,31 @@ const FaultDetailsPage = () => {
         </div>
       </div>
     );
+  }
 
-  /* ---------------- Not Found ---------------- */
-  if (!fault)
+  /* Error State */
+  if (error) {
+    return (
+      <div className="min-h-screen bg-white relative text-gray-800">
+        <div className="absolute inset-0 bg-gray-50/50"></div>
+        <Navbar logout={logout} user={user} />
+
+        <div className="pt-28 sm:pt-32 px-4 sm:px-6 flex items-center justify-center min-h-[calc(100vh-96px)]">
+          <div className="bg-white rounded-2xl border border-red-200 p-6 sm:p-8 shadow-sm text-center max-w-md">
+            <p className="text-red-900 text-base sm:text-lg font-semibold">
+              Error
+            </p>
+            <p className="text-red-700 mt-2 text-sm sm:text-base">
+              {error}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* Not Found State */
+  if (!fault) {
     return (
       <div className="min-h-screen bg-white relative text-gray-800">
         <div className="absolute inset-0 bg-gray-50/50"></div>
@@ -74,8 +103,9 @@ const FaultDetailsPage = () => {
         </div>
       </div>
     );
+  }
 
-  /* ---------------- Main Page ---------------- */
+  /* Main Page */
   return (
     <div className="min-h-screen bg-white relative text-gray-800">
       <div className="absolute inset-0 bg-gray-50/50"></div>
