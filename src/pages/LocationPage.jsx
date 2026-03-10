@@ -257,35 +257,35 @@ export default function LocationPage() {
         )}
 
         {/* Asset Type Info Cards - Show when selected */}
-        {assetType && (
+        {/* {assetType && (
           <div className="mb-8">
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 max-w-5xl mx-auto">
               {/* Total Assets Card */}
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border border-blue-200 text-center">
+              {/* <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border border-blue-200 text-center">
                 <p className="text-2xl font-bold text-[#050E3C]">{allAssets.length}</p>
                 <p className="text-xs text-gray-700 mt-1">Total Assets</p>
-              </div>
+              </div> */}
 
               {/* Filtered Assets Card */}
-              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 border border-green-200 text-center">
+              {/* <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 border border-green-200 text-center">
                 <p className="text-2xl font-bold text-green-700">{filteredAssets.length}</p>
                 <p className="text-xs text-gray-700 mt-1">Found Assets</p>
-              </div>
+              </div> */}
 
               {/* Active Assets Card */}
-              <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg p-4 border border-emerald-200 text-center">
+              {/* <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg p-4 border border-emerald-200 text-center">
                 <p className="text-2xl font-bold text-emerald-700">{allAssets.filter(a => a.status === "Active").length}</p>
                 <p className="text-xs text-gray-700 mt-1">Active</p>
-              </div>
+              </div> */}
 
               {/* Issues Card */}
-              <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border border-red-200 text-center">
+              {/* <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border border-red-200 text-center">
                 <p className="text-2xl font-bold text-red-700">{allAssets.filter(a => a.status === "Faulty").length}</p>
                 <p className="text-xs text-gray-700 mt-1">Issues</p>
-              </div>
-            </div>
+              </div> */}
+            {/* </div>
           </div>
-        )}
+        // )} */}
 
         {/* Filters Section - Centered Card Style */}
         {assetType && (
