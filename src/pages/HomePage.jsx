@@ -75,7 +75,7 @@ export default function HomePage() {
       <Navbar logout={logout} user={user} />
 
       {/* Main Content */}
-      <main className="justify-center relative z-10 mx-10">
+      <main className="justify-center relative sm:mx-10">
         <header className="text-center mt-5">
           <p className="opacity-85 text-xs sm:text-sm md:text-[15px]">
             Welcome to
@@ -88,9 +88,9 @@ export default function HomePage() {
           </p>
         </header>
 
-        <div className="mx-10 mt-5 space-y-5 lg:block">
+        <div className="sm:mx-10 mx-3 mt-5 space-y-5 lg:block">
           {/* Three Status Cards */}
-          <div className="sm:mx-24 mx-4 grid grid-cols-3 sm:grid-cols-3 gap-2 sm:gap-4">
+          <div className="sm:mx-24  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             <HomeCard
               title="Total Faults"
               icon={
@@ -166,7 +166,7 @@ export default function HomePage() {
             <div className="text-center text-sm sm:text-base"> or </div>
 
             {/* Search & Filters */}
-            <div className="p-4 mx-10 border border-bg-gray-50 rounded-lg shadow-sm">
+            <div className="p-4 sm:mx-10 border border-bg-gray-50 rounded-lg shadow-sm">
               <h2 className="text-base sm:text-lg font-semibold mb-4">
                 Search Assets
               </h2>
@@ -233,7 +233,7 @@ export default function HomePage() {
           </div>
 
           {/* My Complaints */}
-          <div className="px-10">
+          <div className="sm:px-10">
             <MyComplaintsCard />
           </div>
         </div>
