@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import AssetList from "../components/assests/AssetList";
 import Navbar from "../components/common/navbar";
+import Loader from "../components/common/Loader";
 import { useAuth } from "../services/authService";
 import { useNavigate, useParams } from "react-router-dom";
 import AssestSearchBar from "../components/assests/AssestSearchBar";
@@ -244,7 +245,7 @@ export default function LocationPage() {
       )}
       {selectedType && (
         <main className="pt-2 justify-center relative z-10">
-          <div className="px-2 sm:px-6">
+          <div className="px-2 sm:px-10 sm:">
             <button
               type="button"
               onClick={() => navigate("/")}
@@ -260,17 +261,13 @@ export default function LocationPage() {
               {room}
             </p>
 
-            <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3 items-center">
-              <div className="hidden md:block" />
-
-              <div className="w-full md:mx-auto">
-                <AssestSearchBar onSearch={setSearchTerm} />
-              </div>
+            <div className="mx-3 mt-10 items-center">
+              <AssestSearchBar onSearch={setSearchTerm} />
             </div>
 
             <div className="mt-10">
               {isLoading && (
-                <p className="text-center text-gray-500">Loading assets...</p>
+                <Loader message="Loading assets..." />
               )}
 
               {!isLoading && (

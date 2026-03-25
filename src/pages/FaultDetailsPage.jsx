@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../services/authService";
 import Navbar from "../components/common/navbar";
+import Loader from "../components/common/Loader";
 import { getFaultById } from "../services/faultService";
 import FaultDetails from "../components/faults/FaultDetails";
 
@@ -52,12 +53,7 @@ const FaultDetailsPage = () => {
         <Navbar logout={logout} user={user} />
 
         <div className="pt-28 sm:pt-32 px-4 sm:px-6 flex items-center justify-center min-h-[calc(100vh-96px)]">
-          <div className="flex flex-col items-center">
-            <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-blue-600 mb-4"></div>
-            <p className="text-gray-600 text-sm sm:text-base">
-              Loading fault details...
-            </p>
-          </div>
+          <Loader message="Loading fault details..." />
         </div>
       </div>
     );

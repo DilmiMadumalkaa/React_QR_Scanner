@@ -11,10 +11,11 @@ import MyComplaintsPage from "./pages/MyComplaintsPage";
 import FaultDetailsPage from "./pages/FaultDetailsPage";
 import LogFaultPage from "./pages/LogFaultPage";
 import AddAssetPage from "./pages/AddAssetPage";
+import Loader from "./components/common/Loader";
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="p-4">Loading...</div>;
+  if (loading) return <Loader message="Authenticating..." />;
   return user ? children : <Navigate to="/login" replace />;
 }
 

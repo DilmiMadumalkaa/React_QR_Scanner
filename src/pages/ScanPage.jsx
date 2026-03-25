@@ -148,9 +148,9 @@ export default function ScanPage() {
 
   return (
     <>
-      <header className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Scan QR Code</h1>
-        <p className="text-gray-600 mt-2">
+      <header className="text-center mb-8 mt-10">
+        <h1 className="text-3xl font-bold text-gray-900 text-center">Scan QR Code</h1>
+        <p className="text-gray-500 mt-2">
           Position your QR code within the camera frame
         </p>
       </header>
@@ -159,7 +159,7 @@ export default function ScanPage() {
         {!isCameraActive ? (
           <button
             onClick={handleStartCamera}
-            className="flex items-center gap-2 bg-[#050E3C] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#050E3C]/90 transition-all shadow-lg"
+            className="flex items-center gap-2 bg-[#050E3C] text-white px-6 py-3 rounded-lg font-medium text-sm sm:text-base hover:bg-[#050E3C]/90 transition-all shadow-lg"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

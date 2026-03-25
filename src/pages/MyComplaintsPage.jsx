@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Navbar from "../components/common/navbar";
 import FaultList from "../components/faults/FaultList";
+import Loader from "../components/common/Loader";
 import { useAuth } from '../services/authService';
 import { getUserFaults } from '../services/faultService';
 
@@ -64,7 +65,7 @@ const MyComplaintsPage = () => {
         
         {/* Header */}
         <header className="text-center mb-8 sm:mb-10">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+          <h1 className="text-3xl font-bold text-gray-900 text-center">
             My Complaints
           </h1>
           <p className="opacity-85 text-sm sm:text-base mt-2 sm:mt-3">
@@ -107,12 +108,7 @@ const MyComplaintsPage = () => {
 
         {/* Loading State */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-16 sm:py-20">
-            <div className="animate-spin rounded-full h-12 w-12 sm:h-14 sm:w-14 border-t-4 border-b-4 border-blue-950 mb-4"></div>
-            <p className="text-gray-600 text-base sm:text-lg">
-              Loading complaints...
-            </p>
-          </div>
+          <Loader message="Loading complaints..." />
         ) : error ? (
           /* Error State */
           <div className="flex flex-col items-center justify-center py-14 sm:py-20 rounded-2xl border border-red-200 bg-red-50 p-6 sm:p-8 shadow-lg text-center">

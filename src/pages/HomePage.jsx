@@ -21,7 +21,7 @@ export default function HomePage() {
           <p className="opacity-85 text-xs sm:text-sm md:text-[15px]">
             Welcome to
           </p>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+          <h1 className="text-3xl md:text-4xl font-bold">
             Location Fault Logger
           </h1>
           <p className="opacity-85 text-xs sm:text-sm md:text-[15px] mt-3">
@@ -29,7 +29,7 @@ export default function HomePage() {
           </p>
         </header>
 
-        <div className="sm:mx-10 mx-3 mt-5 space-y-5 lg:block">
+        <div className="sm:mx-10 mx-3 mt-8 space-y-5 lg:block">
           {/* Three Status Cards */}
           <div className="sm:mx-24  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             <HomeCard
@@ -85,9 +85,9 @@ export default function HomePage() {
             />
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3 sm:px-10">
             {/* Scan QR Button */}
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-10">
               <button
                 onClick={() => navigate("/scan")}
                 className="flex items-center justify-center w-[300px] gap-2 bg-[#050E3C] text-white px-6 py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-[#050E3C]/90 transition-all shadow-lg"
