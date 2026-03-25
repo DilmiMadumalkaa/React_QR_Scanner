@@ -131,7 +131,22 @@ export default function AssetList({ assets, basePath }) {
       </div>
       {assets.length === 0 && (
         <div className="mt-6 rounded-2xl border border-dashed border-gray-300 bg-white p-8 text-center text-gray-500">
-          No assets found for this location.
+          <p className="mb-4">No assets found for this location.</p>
+          <button
+            onClick={() => navigate("/logfault")}
+            className="inline-flex items-center gap-2 px-4 py-3 bg-blue-950 text-white text-md font-medium rounded-lg hover:bg-blue-900 transition"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="16px"
+              viewBox="0 -960 960 960"
+              width="16px"
+              fill="#ffffff"
+            >
+              <path d="M200-120v-680h360l16 80h224v400H520l-16-80H280v280h-80Zm300-440Zm86 160h134v-240H510l-16-80H280v240h290l16 80Z" />
+            </svg>
+            Asset Not Found
+          </button>
         </div>
       )}
     </div>
@@ -169,7 +184,7 @@ function TypeIcon({ type }) {
   const common = "h-10 w-10 rounded-xl flex items-center justify-center";
   const label = type
 
-  if (label.includes("precisionAC")) {
+  if (label.includes("Precision AC")) {
     return (
       <div
         className={`${common} bg-emerald-50 text-emerald-800`}
@@ -188,7 +203,7 @@ function TypeIcon({ type }) {
     );
   }
 
-  if (label.includes("ac")) {
+  if (label.includes("Comfort AC")) {
     return (
       <div className={`${common} bg-blue-50 text-blue-900`} aria-hidden="true">
         <svg
@@ -204,7 +219,7 @@ function TypeIcon({ type }) {
     );
   }
 
-  if (label.includes("light")) {
+  if (label.includes("Light")) {
     return (
       <div
         className={`${common} bg-yellow-50 text-yellow-800`}

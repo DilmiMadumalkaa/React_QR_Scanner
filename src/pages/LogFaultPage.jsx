@@ -29,9 +29,10 @@ export default function LogFaultPage() {
           </button>
 
 
-          <h1 className="text-3xl text-center font-bold mb-6">Report Fault</h1>
+          <h1 className="text-3xl text-center font-bold mb-2">Report Fault</h1>
 
-          {/* Report Fault Form - Pass asset prop */}
+          {/* Report Fault Form */}
+
           <FaultForm asset={asset} />
         </div>
       </div>
