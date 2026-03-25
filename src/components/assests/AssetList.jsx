@@ -12,7 +12,7 @@ export default function AssetList({ assets, basePath }) {
   };
   return (
     <div className="w-full">
-      <div className="mx-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 justify-items-center">
+      <div className="mx-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-3 justify-items-center">
         {assets.map((asset) => (
           <div
             key={asset.id}

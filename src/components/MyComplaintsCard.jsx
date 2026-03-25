@@ -80,7 +80,7 @@ export default function MyComplaintsCard({
   ],
 }) {
   return (
-    <div className="w-full rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+    <div className="w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
       <div>
         <h3 className="text-lg font-bold text-gray-900">My Complaints</h3>
       </div>
