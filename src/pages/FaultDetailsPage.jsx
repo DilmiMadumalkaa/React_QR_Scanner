@@ -115,7 +115,7 @@ const FaultDetailsPage = () => {
       <main className="relative z-10 pt-6 sm:pt-8 px-4 sm:px-6 md:px-10 lg:px-0 pb-16 max-w-5xl mx-auto">
         <header className="text-center mb-8 sm:mb-10">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-            Complaint Details
+            Fault Details
           </h1>
           <p className="opacity-85 text-sm sm:text-base mt-2 sm:mt-3">
             View complete information about your reported fault
