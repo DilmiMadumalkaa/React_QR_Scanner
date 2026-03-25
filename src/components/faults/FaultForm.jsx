@@ -7,6 +7,16 @@ export default function FaultForm({ asset }) {
   const [date, setDate] = useState("");
   const [faultType, setFaultType] = useState("Fault");
   const [priority, setPriority] = useState("Moderate");
+  const [faultDetails, setFaultDetails] = useState("");
+  const [faultDescription, setFaultDescription] = useState("");
+  const [reporterName, setReporterName] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [verified, setVerified] = useState(false);
+  const [manualRegion, setManualRegion] = useState("");
+  const [manualBuilding, setManualBuilding] = useState("");
+  const [manualRoom, setManualRoom] = useState("");
+  const [manualFloor, setManualFloor] = useState("");
+
 
   const handleImageUpload = (e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -19,23 +29,86 @@ export default function FaultForm({ asset }) {
     setImages(selectedFiles);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Fault submitted for asset:", asset);
-    alert("Fault reported successfully!");
-    navigate("/location");
+    try {
+      const formData = new FormData();
+
+      // Asset info
+      formData.append("assetId", asset?.assetId);
+      formData.append("assetType", asset?.type);
+
+      // Location information - use manual fields if asset not found
+      formData.append("region", asset?.region || manualRegion);
+      formData.append("rtom", asset?.rtom);
+      formData.append("station", asset?.station);
+      formData.append("building", asset?.building || manualBuilding);
+      formData.append("floor", asset?.floor || manualFloor);
+      formData.append("room", asset?.room || manualRoom);
+      formData.append("model", asset?.model);
+      formData.append("brand", asset?.brand);
+
+      // Fault info
+      formData.append("faultType", faultType);
+      formData.append("faultDetail", faultDetails);
+      formData.append("faultDescription", faultDescription);
+      formData.append("priority", priority);
+      formData.append("faultOccurredDate", date);
+      formData.append("detailsVerified", verified ? true : false);
+
+      // Reporter info
+      formData.append("updatedBy", reporterName);
+      formData.append("contactNumber", contactNumber);
+
+      // Images
+      images.forEach((image, index) => {
+        formData.append("images[]", image);
+      });
+
+      const response = await fetch(
+        "https://powerprox.sltidc.lk/POSTFaultReg.php/insertFault",
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
+
+      const result = await response.json();
+
+      console.log("API Response:", result);
+
+      if (response.ok) {
+        alert("Fault reported successfully!");
+        navigate("/mycomplaints");
+      } else {
+        alert("Failed to submit fault.");
+      }
+    } catch (error) {
+      console.error("Error submitting fault:", error);
+      alert("Something went wrong.");
+    }
   };
 
   // Determine asset type display
-  const assetTypeDisplay = asset?.type === "ac" ? "Precision AC Unit" : asset?.type === "light" ? "Light Panel" : "Not Found";
-  const assetIdDisplay = asset?.model || "Not Found";
+  const assetTypeDisplay =
+    asset?.type === "Comfort AC"
+      ? "Comfort AC"
+      : asset?.type === "Light"
+        ? "Light Panel"
+        : asset?.type === "Precision AC"
+          ? "Precision AC"
+          : "Not Found";
+  const assetIdDisplay = asset?.id || "Not Found";
 
   return (
-    <div className="p-4">
+    <div className="py-5 px-2">
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Asset Type */}
         <div>
-          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">Asset Type</label>
+          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+            Asset Type
+          </label>
+
           <input
             type="text"
             value={assetTypeDisplay}
@@ -46,7 +119,11 @@ export default function FaultForm({ asset }) {
 
         {/* Asset ID */}
         <div>
-          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">Asset ID</label>
+
+          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+            Asset ID
+          </label>
+
           <input
             type="text"
             value={assetIdDisplay}
@@ -55,9 +132,78 @@ export default function FaultForm({ asset }) {
           />
         </div>
 
+        {/* Manual Location Fields - Only show if asset is NOT found */}
+        {!asset && (
+          <>
+            {/* Region */}
+            <div>
+              <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+                Region
+              </label>
+              <input
+                type="text"
+                required
+                value={manualRegion}
+                onChange={(e) => setManualRegion(e.target.value)}
+                placeholder="Enter region"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+              />
+            </div>
+
+            {/* Building */}
+            <div>
+              <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+                Building
+              </label>
+              <input
+                type="text"
+                required
+                value={manualBuilding}
+                onChange={(e) => setManualBuilding(e.target.value)}
+                placeholder="Enter building"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+              />
+            </div>
+
+            {/* Room */}
+            <div>
+              <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+                Room
+              </label>
+              <input
+                type="text"
+                required
+                value={manualRoom}
+                onChange={(e) => setManualRoom(e.target.value)}
+                placeholder="Enter room"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+              />
+            </div>
+
+            {/* Floor */}
+            <div>
+              <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+                Floor
+              </label>
+              <input
+                type="text"
+                required
+                value={manualFloor}
+                onChange={(e) => setManualFloor(e.target.value)}
+                placeholder="Enter floor"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+              />
+            </div>
+          </>
+        )}
+
         {/* Fault Type - Button Style */}
         <div>
-          <label className="block text-xs font-bold text-gray-600 mb-3 uppercase">Fault Type</label>
+
+          <label className="block text-xs font-bold text-gray-600 mb-3 uppercase">
+            Fault Type
+          </label>
+
           <div className="grid grid-cols-3 gap-3">
             {["Fault", "Work", "Service"].map((type) => (
               <button
@@ -67,10 +213,11 @@ export default function FaultForm({ asset }) {
                 className={`py-3 rounded-lg font-semibold transition-all ${
                   faultType === type
                     ? type === "Fault"
-                      ? "bg-red-400 text-white"
+                      ? "bg-red-600 text-white"
                       : type === "Work"
-                      ? "bg-teal-400 text-white"
-                      : "bg-blue-400 text-white"
+                        ? "bg-green-600 text-white"
+                        : "bg-blue-600 text-white"
+
                     : "bg-gray-200 text-gray-600 hover:bg-gray-300"
                 }`}
               >
@@ -82,18 +229,30 @@ export default function FaultForm({ asset }) {
 
         {/* Fault Details */}
         <div>
-          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">Fault Details</label>
+
+          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+            Fault Details
+          </label>
+
           <textarea
             required
             rows={2}
+            value={faultDetails}
+            onChange={(e) => setFaultDetails(e.target.value)}
             placeholder="Briefly Mention the Fault"
-            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-[#050E3C] focus:outline-none"
+
+            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+
           />
         </div>
 
         {/* Priority - Button Style */}
         <div>
-          <label className="block text-xs font-bold text-gray-600 mb-3 uppercase">Priority</label>
+
+          <label className="block text-xs font-bold text-gray-600 mb-3 uppercase">
+            Priority
+          </label>
+
           <div className="grid grid-cols-3 gap-3">
             {["Critical", "Moderate", "Non-Critical"].map((pri) => (
               <button
@@ -103,10 +262,11 @@ export default function FaultForm({ asset }) {
                 className={`py-3 rounded-lg font-semibold transition-all ${
                   priority === pri
                     ? pri === "Critical"
-                      ? "bg-red-400 text-white"
+                      ? "bg-red-600 text-white"
                       : pri === "Moderate"
-                      ? "bg-teal-400 text-white"
-                      : "bg-blue-400 text-white"
+                        ? "bg-green-600 text-white"
+                        : "bg-blue-600 text-white"
+
                     : "bg-gray-200 text-gray-600 hover:bg-gray-300"
                 }`}
               >
@@ -118,26 +278,40 @@ export default function FaultForm({ asset }) {
 
         {/* Fault Description */}
         <div>
-          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">Fault Description</label>
+
+          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+            Fault Description
+          </label>
+
           <textarea
             required
             rows={4}
+            value={faultDescription}
+            onChange={(e) => setFaultDescription(e.target.value)}
             placeholder="Describe the Fault"
-            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-[#050E3C] focus:outline-none"
+
+            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+
           />
         </div>
 
         {/* Fault Photo */}
         <div>
-          <label className="block text-xs font-bold text-gray-600 mb-3 uppercase">Fault Photo (Optional)</label>
-          <label className="flex items-center justify-center w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#050E3C] hover:bg-gray-50 transition">
+
+          <label className="block text-xs font-bold text-gray-600 mb-3 uppercase">
+            Fault Photo (Optional)
+          </label>
+          <label className="flex items-center justify-center w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400 hover:bg-gray-50 transition">
             <div className="flex flex-col items-center">
               <svg
-                className="w-8 h-8 text-gray-600 mb-2"
-                fill="currentColor"
-                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#666666"
               >
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+                <path d="M480-480ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h320v80H200v560h560v-320h80v320q0 33-23.5 56.5T760-120H200Zm40-160h480L570-480 450-320l-90-120-120 160Zm440-320v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z" />
+
               </svg>
               <span className="text-gray-600 font-medium">Add Photo</span>
             </div>
@@ -158,41 +332,66 @@ export default function FaultForm({ asset }) {
 
         {/* Date and Time */}
         <div>
-          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">Fault Occurred Date and Time</label>
+
+          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+            Fault Occurred Date
+          </label>
+
           <input
             required
-            type="datetime-local"
+            type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-[#050E3C] focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+
           />
         </div>
 
         {/* Reporter Name */}
         <div>
-          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">Reporter Name</label>
+
+          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+            Reporter Name
+          </label>
           <input
             required
             type="text"
+            value={reporterName}
+            onChange={(e) => setReporterName(e.target.value)}
             placeholder="Enter your name"
-            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-[#050E3C] focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+
           />
         </div>
 
         {/* Contact Number */}
         <div>
-          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">Contact Number</label>
+
+          <label className="block text-xs font-bold text-gray-600 mb-2 uppercase">
+            Contact Number
+          </label>
           <input
             required
             type="text"
+            value={contactNumber}
+            onChange={(e) => setContactNumber(e.target.value)}
             placeholder="Enter your contact number"
-            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-[#050E3C] focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 p-3 focus:ring-1 focus:ring-gray-300 focus:outline-none"
+
           />
         </div>
 
         {/* Verify Checkbox */}
         <div className="flex items-center gap-2">
-          <input type="checkbox" required className="w-4 h-4 rounded" />
+
+          <input
+            type="checkbox"
+            required
+            checked={verified}
+            onChange={(e) => setVerified(e.target.checked)}
+            className="w-4 h-4 rounded"
+          />
+
           <label className="text-sm font-medium">
             I verify that all information is correct
           </label>

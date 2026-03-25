@@ -15,7 +15,7 @@ const QRScanner = () => {
     try {
       // Remove any whitespace and split by "/"
       const parts = qrCodeText.trim().split("/");
-      
+
       if (parts.length < 2) {
         throw new Error("Invalid QR code format");
       }
@@ -54,10 +54,10 @@ const QRScanner = () => {
           const building = locationParams.building || "Unknown";
           const floor = locationParams.floor || "1";
           const room = locationParams.room || "General";
-          
+
           const url = `/${region}/${rtom}/${station}/${building}/${floor}/${room}`;
           console.log("Navigating to:", url);
-          
+
           navigate(url);
         } catch (err) {
           console.error("Navigation error:", err);
@@ -65,7 +65,9 @@ const QRScanner = () => {
           setShowError(true);
         }
       } else {
-        setErrorMessage("Invalid QR code format. Expected: REGION/STATION/BUILDING/FLOOR/ROOM");
+        setErrorMessage(
+          "Invalid QR code format. Expected: REGION/STATION/BUILDING/FLOOR/ROOM",
+        );
         setShowError(true);
       }
     } catch (error) {
@@ -86,7 +88,7 @@ const QRScanner = () => {
       .start(
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
-        (decodedText) => handleScanSuccess(decodedText, qrCodeScanner)
+        (decodedText) => handleScanSuccess(decodedText, qrCodeScanner),
       )
       .catch(console.error);
 
@@ -106,15 +108,24 @@ const QRScanner = () => {
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex-shrink-0 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.876c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-red-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.876c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900">QR Code Error</h3>
             </div>
-            <p className="text-gray-600 mb-6 text-base">
-              {errorMessage}
-            </p>
+            <p className="text-gray-600 mb-6 text-base">{errorMessage}</p>
             <div className="flex gap-3">
               <button
                 onClick={() => {

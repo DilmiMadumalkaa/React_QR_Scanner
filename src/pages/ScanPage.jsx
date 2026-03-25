@@ -21,34 +21,41 @@ export default function ScanPage() {
   }, []);
 
   const parseQRCode = (qrCodeText) => {
-    // Expected format: REGION/STATION/BUILDING/FLOOR/ROOM
-    // Example: HQ/HQ/OTS Building B/8/VPN Server Room
-    console.log("Parsing QR Code:", qrCodeText);
+    console.log("Raw QR Code:", qrCodeText);
 
     try {
-      // Remove any whitespace and split by "/"
-      const parts = qrCodeText.trim().split("/");
+      let path = qrCodeText.trim();
 
-      if (parts.length < 2) {
+      // If the QR contains a full URL, extract only the path
+      if (path.startsWith("http")) {
+        const url = new URL(path);
+        path = url.pathname;
+      }
+
+      // Remove first slash
+      path = path.replace(/^\/+/, "");
+
+      const parts = path.split("/").map(decodeURIComponent);
+
+      console.log("Parsed parts:", parts);
+
+      if (parts.length < 3) {
         throw new Error("Invalid QR code format");
       }
 
-      const locationParams = {
-        region: parts[0] || undefined,
-        station: parts[1] || undefined, // RTOM/Station
-        building: parts[2] || undefined,
-        floor: parts[3] || undefined,
-        room: parts[4] || undefined,
+      return {
+        region: parts[0],
+        rtom: parts[1],
+        station: parts[2],
+        building: parts[3] || null,
+        floor: parts[4] || null,
+        room: parts[5] || null,
       };
-
-      console.log("Parsed location params:", locationParams);
-      return locationParams;
     } catch (error) {
       console.error("Error parsing QR code:", error);
       return null;
     }
   };
-
   const handleStartCamera = async () => {
     try {
       setError(null);
@@ -79,21 +86,29 @@ export default function ScanPage() {
           // Parse QR code directly
           const locationParams = parseQRCode(decodedText);
 
-          if (locationParams && locationParams.region && locationParams.station) {
+          if (
+            locationParams &&
+            locationParams.region &&
+            locationParams.station
+          ) {
             try {
               // Build the URL with the extracted parameters
               // Route pattern: /:region/:rtom/:station/:building/:floor?/:room?
-              const region = locationParams.region || "HQ";
-              const rtom = locationParams.station || "HQ"; // Using station as rtom for now
-              const station = locationParams.station || "HQ";
-              const building = locationParams.building || "Unknown";
-              const floor = locationParams.floor || "1";
-              const room = locationParams.room || "General";
-              
-              const url = `/${region}/${rtom}/${station}/${building}/${floor}/${room}`;
+              const region = locationParams.region;
+              const rtom = locationParams.rtom;
+              const station = locationParams.station;
+              const building = locationParams.building;
+              const floor = locationParams.floor;
+              const room = locationParams.room;
+
+              let url = `/${region}/${rtom}/${station}`;
+
+              if (building) url += `/${building}`;
+              if (floor) url += `/${floor}`;
+              if (room) url += `/${room}`;
               console.log("Navigating to:", url);
 
-              navigate(url);
+              navigate(encodeURI(url));
             } catch (err) {
               console.error("Navigation error:", err);
               setErrorMessage("Failed to navigate to location page");
@@ -101,14 +116,14 @@ export default function ScanPage() {
             }
           } else {
             setErrorMessage(
-              "Invalid QR code format. Expected: REGION/STATION/BUILDING/FLOOR/ROOM"
+              "Invalid QR code format. Expected: REGION/RTOM/STATION/BUILDING/FLOOR/ROOM",
             );
             setShowErrorModal(true);
           }
         },
         (errorMessage) => {
           // Errors during scanning - this is normal when no QR code is in view
-        }
+        },
       );
 
       setIsCameraActive(true);
@@ -245,9 +260,7 @@ export default function ScanPage() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
-                QR Code Error
-              </h3>
+              <h3 className="text-xl font-bold text-gray-900">QR Code Error</h3>
             </div>
             <p className="text-gray-600 mb-6 text-base">{errorMessage}</p>
             <div className="flex gap-3">
