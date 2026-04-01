@@ -6,11 +6,32 @@ const API_URL = "https://powerprox.sltidc.lk/GETFaultReg.php";
 const mapFaultStatus = (apiStatus) => {
   if (!apiStatus) return "PENDING";
   const statusMap = {
+    // New/Pending statuses
     "New": "PENDING",
+    "Pending": "PENDING",
+    "Created": "PENDING",
+    
+    // In Progress statuses
     "Submitted": "IN_PROGRESS",
+    "In Progress": "IN_PROGRESS",
+    "In_Progress": "IN_PROGRESS",
+    "Assigned": "IN_PROGRESS",
+    "Under Review": "IN_PROGRESS",
+    "In Review": "IN_PROGRESS",
+    "Escalated": "IN_PROGRESS",
+    
+    // Completed statuses
     "Completed": "COMPLETED",
     "Resolved": "COMPLETED",
-    "Closed": "COMPLETED"
+    "Closed": "COMPLETED",
+    "Fixed": "COMPLETED",
+    "Done": "COMPLETED",
+    
+    // Rejected/Failed statuses
+    "Rejected": "REJECTED",
+    "Failed": "REJECTED",
+    "Won't Fix": "REJECTED",
+    "Cancelled": "REJECTED"
   };
   return statusMap[apiStatus] || "PENDING";
 };
@@ -93,8 +114,18 @@ export const getAllFaults = async () => {
 export const getUserFaults = async (userId) => {
   try {
     const allFaults = await getAllFaults();
-    // Filter by UUID if needed, otherwise return all
-    return allFaults;
+    
+    if (!userId) {
+      console.warn("No user ID provided to getUserFaults");
+      return [];
+    }
+    
+    // Filter faults where UUID matches the current user's ID
+    const userFaults = allFaults.filter(fault => 
+      fault.uuid === userId || fault.UUID === userId
+    );
+    
+    return userFaults;
   } catch (error) {
     console.error("Error fetching user faults:", error);
     return [];

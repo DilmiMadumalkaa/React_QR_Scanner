@@ -1,17 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../services/authService";
 import Navbar from "../components/common/navbar";
 import HomeCard from "../components/HomeCard";
 import MyComplaintsCard from "../components/MyComplaintsCard";
 import SearchLocation from "../components/SearchLocation";
+import { getUserFaults } from "../services/faultService";
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const [faultStats, setFaultStats] = useState({
+    total: 0,
+    inProgress: 0,
+    completed: 0
+  });
+  const [faults, setFaults] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch fault statistics from API
+  useEffect(() => {
+    const fetchFaultStats = async () => {
+      try {
+        setLoading(true);
+        const userFaults = await getUserFaults(user?.uid);
+        
+        // Store faults for display
+        setFaults(userFaults);
+        
+        // Count faults by status
+        const stats = {
+          total: userFaults.length,
+          inProgress: userFaults.filter(f => f.status === "IN_PROGRESS").length,
+          completed: userFaults.filter(f => f.status === "COMPLETED").length
+        };
+        
+        setFaultStats(stats);
+      } catch (error) {
+        console.error("Error fetching fault statistics:", error);
+        // Keep default stats on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user?.uid) {
+      fetchFaultStats();
+    }
+  }, [user?.uid]);
 
   return (
-    <div className="min-h-screen bg-white overflow-hidden relative text-gray-800">
+    <div className="min-h-screen mb-5 bg-white overflow-hidden relative text-gray-800">
       {/* Navbar */}
       <Navbar logout={logout} user={user} />
 
@@ -45,7 +84,7 @@ export default function HomePage() {
                   <path d="M440-400v-360h80v360h-80Zm0 200v-80h80v80h-80Z" />
                 </svg>
               }
-              value={7}
+              value={loading ? "-" : faultStats.total}
               iconBg="bg-red-50"
               textColor="text-red-600"
             />
@@ -62,7 +101,7 @@ export default function HomePage() {
                   <path d="M480-120q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-480q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-840q82 0 155.5 35T760-706v-94h80v240H600v-80h110q-41-56-101-88t-129-32q-117 0-198.5 81.5T200-480q0 117 81.5 198.5T480-200q105 0 183.5-68T756-440h82q-15 137-117.5 228.5T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z" />
                 </svg>
               }
-              value={2}
+              value={loading ? "-" : faultStats.inProgress}
               iconBg="bg-yellow-50"
               textColor="text-yellow-600"
             />
@@ -79,7 +118,7 @@ export default function HomePage() {
                   <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
                 </svg>
               }
-              value={2}
+              value={loading ? "-" : faultStats.completed}
               iconBg="bg-green-50"
               textColor="text-green-600"
             />
@@ -112,7 +151,7 @@ export default function HomePage() {
 
           {/* My Complaints */}
           <div className="sm:px-10">
-            <MyComplaintsCard />
+            <MyComplaintsCard faults={faults} />
           </div>
         </div>
       </main>
