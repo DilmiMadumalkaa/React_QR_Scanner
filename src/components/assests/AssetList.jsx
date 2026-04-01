@@ -24,10 +24,6 @@ export default function AssetList({ assets, basePath }) {
               {/* Asset Icon & Type */}
               <div className="flex items-start justify-between gap-2 mb-2">
                 <TypeIcon type={asset.type} />
-                {/* Status Badge - Top Right */}
-                <div className="absolute top-5 right-5 z-10">
-                  <StatusBadge status={asset.status} />
-                </div>
               </div>
 
               {/* Asset Name */}

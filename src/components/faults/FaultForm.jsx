@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../services/authService';
 
 export default function FaultForm({ asset }) {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [images, setImages] = useState([]);
   const [date, setDate] = useState("");
   const [faultType, setFaultType] = useState("Fault");
@@ -59,6 +61,7 @@ export default function FaultForm({ asset }) {
       // Reporter info
       formData.append("updatedBy", reporterName);
       formData.append("contactNumber", contactNumber);
+      formData.append("UUID", user?.uid);
 
       // Images
       images.forEach((image, index) => {

@@ -5,7 +5,7 @@ export default function GoogleAuthButton() {
 
   return (
     <button 
-      className="w-full flex items-center gap-3 py-3 px-5 bg-white border-none rounded-xl cursor-pointer text-base font-semibold text-gray-700 transition-all duration-200 ease-in-out backdrop-blur-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="w-full flex items-center justify-center gap-1 py-3 px-3 bg-gray-100 border-2 border-gray-300 rounded-xl cursor-pointer text-base font-semibold text-gray-800 transition-all duration-300 ease-in-out hover:bg-gray-200 hover:shadow-[0_8px_24px_rgba(79,70,229,0.2)] hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
       onClick={loginWithGoogle}
       disabled={isSigningIn}
     >
